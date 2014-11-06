@@ -62,5 +62,10 @@ RPROMPT='$(__git_prompt)'
 
 echo "================"
 echo " TODO:"
-[[ -z $(cat /home/izabera/todo 2> /dev/null) ]] && echo "nothing"
+TODO=$(cat /home/izabera/todo 2> /dev/null)
+if [[ -z "$TODO" ]]; then
+  echo "nothing"
+else
+  echo "$TODO"
+fi
 echo "================"
