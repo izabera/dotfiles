@@ -29,5 +29,5 @@ RPROMPT='$(git branch &> /dev/null && [[ -n $(git status --porcelain) ]] && echo
 
 echo "================"
 echo " TODO:"
-cat /home/izabera/todo 2> /dev/null
+[[ -z $(cat /home/izabera/todo 2> /dev/null) ]] && echo "nothing"
 echo "================"
