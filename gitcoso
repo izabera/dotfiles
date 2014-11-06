@@ -1,0 +1,8 @@
+
+#GITBRANCH=$(git branch &> /dev/null)
+#[[ -n "$GITBRANCH" ]] && GITSTATUS=$(git status --porcelain)
+#[[ $(grep -E "^\?\?" <<< "$GITSTATUS") ]] && GITUNSTAGED="${MAGENTA}+${NO_COLOR}" || GITUNSTAGED=
+#[[ $(grep -E "^.?M" <<< "$GITSTATUS") ]] && GITSTAGED="${BLUE}*${NO_COLOR}" || GITSTAGED=
+#[[ -n "$GITBRANCH" ]] && GITSTATUS=$(git status --porcelain) || GITSTATUS=
+
+RPROMPT="$GITUNSTAGED$GITSTAGED$GITBRANCH"
