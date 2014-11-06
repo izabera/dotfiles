@@ -42,7 +42,6 @@ function __git_prompt {
     git rev-parse --git-dir >& /dev/null
     if [[ $? == 0 ]]
     then
-      echo -n "["
       if [[ $(git ls-files -u >& /dev/null) == '' ]]
       then
         git diff --quiet >& /dev/null
@@ -63,7 +62,6 @@ function __git_prompt {
       fi
       echo -n $(grep -E '^\* ' <<< $BRANCH | sed 's/..//')
       echo -n $RESET
-      echo -n "]"
     fi
   #fi
 }
