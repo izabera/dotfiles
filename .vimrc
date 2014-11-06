@@ -51,7 +51,10 @@ set foldmethod=indent
 " set guifont=Ubuntu\ Mono\ 9
 " let g:solarized_termcolors=256
 " set t_Co=256
-colorscheme elflord
+colorscheme torte
+hi CursorLine ctermbg=233
+hi Folded ctermfg=236
+hi LineNr ctermfg=8
 
 " <------------ PLUGINS --------------->
 " nerdtree config:

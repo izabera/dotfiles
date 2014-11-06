@@ -9,7 +9,7 @@ bindkey -v
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/izabera/.zshrc'
 
-autoload -Uz compinit colors zsh/terminfo
+autoload -Uz compinit colors zsh/terminfo zmv zrecompile
 compinit
 # End of lines added by compinstall
 
@@ -31,7 +31,6 @@ autoload colors zsh/terminfo
 colors
  
 function __git_prompt {
-
   git rev-parse --git-dir >& /dev/null
   if [[ $? == 0 ]]
   then
