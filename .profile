@@ -10,3 +10,8 @@ alias lsless='ls --color=always | less -R'
 
 alias n-di='ssh izabera@77.108.43.95 -p 2003'
 
+#alias mkdirc='mkdir -p $1 && cd $1'
+
+alias diff='colordiff'
+
+alias updatedb='sudo updatedb'

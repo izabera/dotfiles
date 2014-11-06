@@ -35,6 +35,7 @@ inoremap <C-a> <Esc>ggVG
 nnoremap <CR> o<Esc>
 
 filetype plugin indent on
+syntax on
 set foldmethod=indent
 
 " theme config:
