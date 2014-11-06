@@ -14,7 +14,7 @@ set ruler
 set title
 set smartcase
 set bs=eol,indent,start
-"set cursorline
+set cursorline
 
 set hlsearch
 set incsearch
@@ -39,19 +39,8 @@ syntax on
 set foldmethod=indent
 
 " theme config:
-" solarized theme
-" light bg in gui
-" ubuntu mono 9 in gui
-" colorscheme solarized
-" if has('gui_running')
-"   set background=light
-" else
-"   set background=dark
-" endif
-" set guifont=Ubuntu\ Mono\ 9
-" let g:solarized_termcolors=256
-" set t_Co=256
 colorscheme torte
+hi clear CursorLine
 hi CursorLine ctermbg=233
 hi Folded ctermfg=236
 hi LineNr ctermfg=8
