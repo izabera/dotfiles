@@ -7,7 +7,7 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:
 bindkey -v
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
-zstyle :compinstall filename '/home/izabera/.zshrc'
+zstyle :compinstall filename "$HOME/.zshrc"
 
 autoload -Uz compinit colors zsh/terminfo zmv zrecompile edit-command-line
 compinit
@@ -15,7 +15,7 @@ zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 # End of lines added by compinstall
 
-source /home/izabera/.profile
+source $HOME/.profile
 
 BLUE=$'%{\e[1;34m%}'
 RED=$'%{\e[1;31m%}'
@@ -63,7 +63,7 @@ RPROMPT='$(__git_prompt)'
 
 echo "================"
 echo " TODO:"
-TODO=$(cat /home/izabera/todo 2> /dev/null)
+TODO=$(cat $HOME/todo 2> /dev/null)
 if [[ -z "$TODO" ]]; then
   echo "nothing"
 else

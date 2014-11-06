@@ -1,4 +1,4 @@
-export PATH=$PATH:/home/izabera/bin
+export PATH=$PATH:$HOME/bin
 
 alias ls='ls --color=auto'
 alias la='ls -A'
