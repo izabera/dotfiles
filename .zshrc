@@ -24,7 +24,7 @@ MAGENTA=$'%{\e[1;35m%}'
 YELLOW=$'%{\e[1;33m%}'
 NO_COLOR=$'%{\e[0m%}'
 
-PROMPT="${GREEN}%n${NO_COLOR}@%m ${RED}%~${NO_COLOR} %# "
+PROMPT="${GREEN}%n${NO_COLOR}@${CYAN}%m ${RED}%~${NO_COLOR} %# "
 RPROMPT='$(git branch &> /dev/null && [[ -n $(git status --porcelain) ]] && echo "${MAGENTA}+${NO_COLOR}")$(git branch &> /dev/null && [[ -n $(git status --untracked-files=no --porcelain) ]] && echo "${BLUE}*${NO_COLOR}")$(git branch 2> /dev/null | sed -e "s/\* /${YELLOW}/" -e "s/\$/&${NO_COLOR}/")'
 
 echo "================"
