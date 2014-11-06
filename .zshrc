@@ -9,8 +9,10 @@ bindkey -v
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/izabera/.zshrc'
 
-autoload -Uz compinit colors zsh/terminfo zmv zrecompile
+autoload -Uz compinit colors zsh/terminfo zmv zrecompile edit-command-line
 compinit
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
 # End of lines added by compinstall
 
 source /home/izabera/.profile
