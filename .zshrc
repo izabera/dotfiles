@@ -2,14 +2,14 @@
 HISTFILE=~/.histfile
 HISTSIZE=1000000
 SAVEHIST=1000000
-setopt appendhistory autocd beep extendedglob nomatch notify PROMPT_SUBST
+setopt appendhistory autocd beep extendedglob nomatch notify prompt_subst
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'  
 bindkey -v
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/izabera/.zshrc'
 
-autoload -Uz compinit
+autoload -Uz compinit colors zsh/terminfo
 compinit
 # End of lines added by compinstall
 
@@ -26,13 +26,44 @@ NO_COLOR=$'%{\e[0m%}'
 
 PROMPT="${GREEN}%n${NO_COLOR}@${CYAN}%m ${RED}%~${NO_COLOR} %# "
 
-GITBRANCH=$(git branch &> /dev/null)
-[[ -n "$GITBRANCH" ]] && GITSTATUS=$(git status --porcelain)
-[[ $(grep -E "^\?\?" <<< "$GITSTATUS") ]] && GITUNSTAGED="${MAGENTA}+${NO_COLOR}" || GITUNSTAGED=
-[[ $(grep -E "^.?M" <<< "$GITSTATUS") ]] && GITSTAGED="${BLUE}*${NO_COLOR}" || GITSTAGED=
-[[ -n "$GITBRANCH" ]] && GITSTATUS=$(git status --porcelain) || GITSTATUS=
+setopt prompt_subst
+autoload colors zsh/terminfo
+colors
+ 
+function __git_prompt {
+local DIRTY="%{$fg[yellow]%}"
+local CLEAN="%{$fg[green]%}"
+local UNMERGED="%{$fg[red]%}"
+local RESET="%{$terminfo[sgr0]%}"
+git rev-parse --git-dir >& /dev/null
+if [[ $? == 0 ]]
+then
+  echo -n "["
+  if [[ `git ls-files -u >& /dev/null` == '' ]]
+  then
+    git diff --quiet >& /dev/null
+    if [[ $? == 1 ]]
+    then
+      echo -n $DIRTY
+    else
+      git diff --cached --quiet >& /dev/null
+      if [[ $? == 1 ]]
+      then
+        echo -n $DIRTY
+      else
+        echo -n $CLEAN
+      fi
+    fi
+  else
+    echo -n $UNMERGED
+  fi
+  echo -n `git branch | grep '* ' | sed 's/..//'`
+  echo -n $RESET
+  echo -n "]"
+fi
+}
 
-RPROMPT="$GITUNSTAGED$GITSTAGED$GITBRANCH"
+RPROMPT='$(__git_prompt)'
 #RPROMPT='$(git branch &> /dev/null && [[ -n $(git status --porcelain) ]] && echo "${MAGENTA}+${NO_COLOR}")$(git branch &> /dev/null && [[ -n $(git status --untracked-files=no --porcelain) ]] && echo "${BLUE}*${NO_COLOR}")$(git branch 2> /dev/null | sed -e "s/\* /${YELLOW}/" -e "s/\$/&${NO_COLOR}/")'
 
 echo "================"
