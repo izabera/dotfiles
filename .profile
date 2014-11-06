@@ -15,3 +15,13 @@ alias n-di='ssh izabera@77.108.43.95 -p 2003'
 alias diff='colordiff'
 
 alias updatedb='sudo updatedb'
+
+function mkdirc {
+  if [ -z "$1" ] || [ -n "$2" ]; then
+    echo "Usage: $0 directory"
+    return 1
+  else
+    mkdir -p "$1"
+    cd "$1"
+  fi
+}
