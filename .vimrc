@@ -22,8 +22,8 @@ set incsearch
 " clipboard mappings:
 " copy: C-c
 " cut: C-x
-vnoremap <C-x> "+x
-vnoremap <C-c> "+y
+vnoremap <C-x> "*x
+vnoremap <C-c> "*y
 " imap <C-v> <Esc>"+Pa        " my terminal uses <C-S-v> as paste
 
 " misc mappings:
