@@ -31,43 +31,34 @@ autoload colors zsh/terminfo
 colors
  
 function __git_prompt {
-  local DIRTY="%{$fg[yellow]%}"
-  local CLEAN="%{$fg[green]%}"
-  local UNMERGED="%{$fg[red]%}"
-  local RESET="%{$terminfo[sgr0]%}"
 
-  local BRANCH="$(git branch 2> /dev/null)"
-  #if [[ -n "$BRANCH" ]]
-  #then
-    git rev-parse --git-dir >& /dev/null
-    if [[ $? == 0 ]]
+  git rev-parse --git-dir >& /dev/null
+  if [[ $? == 0 ]]
+  then
+    if [[ $(git ls-files -u >& /dev/null) == '' ]]
     then
-      if [[ $(git ls-files -u >& /dev/null) == '' ]]
+      git diff --quiet >& /dev/null
+      if [[ $? == 1 ]]
       then
+        echo -n $YELLOW
+      else
         git diff --quiet >& /dev/null
         if [[ $? == 1 ]]
         then
-          echo -n $DIRTY
+          echo -n $YELLOW
         else
-          git diff --cached --quiet >& /dev/null
-          if [[ $? == 1 ]]
-          then
-            echo -n $DIRTY
-          else
-            echo -n $CLEAN
-          fi
+          echo -n $GREEN
         fi
-      else
-        echo -n $UNMERGED
       fi
-      echo -n $(grep -E '^\* ' <<< $BRANCH | sed 's/..//')
-      echo -n $RESET
+    else
+      echo -n $RED
     fi
-  #fi
+    echo -n $(git branch | grep -E '^\* ' | sed 's/..//')
+    echo -n $NO_COLOR
+  fi
 }
 
 RPROMPT='$(__git_prompt)'
-#RPROMPT='$(git branch &> /dev/null && [[ -n $(git status --porcelain) ]] && echo "${MAGENTA}+${NO_COLOR}")$(git branch &> /dev/null && [[ -n $(git status --untracked-files=no --porcelain) ]] && echo "${BLUE}*${NO_COLOR}")$(git branch 2> /dev/null | sed -e "s/\* /${YELLOW}/" -e "s/\$/&${NO_COLOR}/")'
 
 echo "================"
 echo " TODO:"
