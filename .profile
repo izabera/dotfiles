@@ -9,3 +9,4 @@ alias df='df -h'
 alias lsless='ls --color=always | less -R'
 
 alias n-di='ssh izabera@77.108.43.95 -p 2003'
+
