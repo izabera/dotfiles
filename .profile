@@ -8,6 +8,8 @@ alias du='du -h'
 alias df='df -h'
 alias grep='grep --color=auto'
 
+alias funkyass='mpv http://funkadelica.duckdns.org:8000/funkentelechy.ogg'
+
 #show the file and quit if it fits on one screen
 #alias less='less -FX'
 #hate it
@@ -32,4 +34,9 @@ function mkdirc {
     mkdir -p "$1"
     cd "$1"
   fi
+}
+
+function uprm {
+  temp=$(basename $PWD)
+  cd .. && rm -rf "$temp"
 }
