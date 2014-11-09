@@ -9,7 +9,8 @@ alias df='df -h'
 alias grep='grep --color=auto'
 
 #show the file and quit if it fits on one screen
-alias less='less -FX'
+#alias less='less -FX'
+#hate it
 
 alias lsless='ls --color=always | less -R'
 alias psgrep='ps aux | grep'
