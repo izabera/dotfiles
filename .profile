@@ -19,6 +19,7 @@ alias psgrep='ps aux | grep'
 alias psless='ps aux | less'
 
 alias n-di='ssh izabera@77.108.43.95 -p 2003'
+alias letame='ssh 31.220.48.33 -p 2212'
 
 alias diff='colordiff'
 
