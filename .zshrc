@@ -33,34 +33,45 @@ setopt prompt_subst
 autoload colors zsh/terminfo
 colors
  
-function __git_prompt {
-  git rev-parse --git-dir >& /dev/null
-  if [[ $? == 0 ]]
-  then
-    if [[ $(git ls-files -u >& /dev/null) == '' ]]
-    then
-      git diff --quiet >& /dev/null
-      if [[ $? == 1 ]]
-      then
-        echo -n $YELLOW
+function __git_prompt () {
+  __branch=$(git branch 2> /dev/null | grep "^* " | cut -c 2-)
+  if [[ "x$__branch" != "x" ]] ; then
+    __status=$(git status --porcelain)
+    if [[ "x$__status" != "x" ]] ; then
+      __untracked=$(grep "^??" <<< "$__status")
+      if [[ "x$__untracked" == "x" ]] ; then
+        echo "${YELLOW}$__branch${NO_COLOR}"
       else
-        git diff --quiet >& /dev/null
-        if [[ $? == 1 ]]
-        then
-          echo -n $YELLOW
-        else
-          echo -n $GREEN
-        fi
+        echo "${RED}$__branch${NO_COLOR}"
       fi
-    else
-      echo -n $RED
+    else 
+      echo -n "${GREEN}$__branch${NO_COLOR}"
     fi
-    echo -n $(git branch | grep -E '^\* ' | sed 's/..//')
-    echo -n $NO_COLOR
   fi
 }
 
-RPROMPT='$(__git_prompt)$(battery-cli)'
+function __battery () {
+  if [ -f /sys/class/power_supply/BAT0/capacity ]; then
+    read __val < /sys/class/power_supply/BAT0/capacity
+  else
+    __val=0
+  fi
+  echo -n " ["
+  for (( ; i < 10 ; i++ )) ; do
+    if (( i >= (__val/10) )) ; then
+      echo -n "${RED}=${NO_COLOR}"
+    else
+      echo -n "${GREEN}=${NO_COLOR}"
+    fi
+  done
+  echo -n "]"
+}
+
+function __return () {
+  [[ "$?" == 0 ]] && echo -n "${GREEN}$?${NO_COLOR}" || echo -n "${RED}$?${NO_COLOR}"
+}
+
+RPROMPT='$(__return)$(__git_prompt)$(__battery)'
 
 echo "================"
 echo " TODO:"
