@@ -4,6 +4,7 @@ HISTSIZE=1000000
 SAVEHIST=1000000
 setopt appendhistory autocd beep extendedglob nomatch notify prompt_subst
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'  
+#zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 bindkey -v
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
@@ -59,7 +60,7 @@ function __git_prompt {
   fi
 }
 
-RPROMPT='$(__git_prompt)'
+RPROMPT='$(__git_prompt)$(battery-cli)'
 
 echo "================"
 echo " TODO:"

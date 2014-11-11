@@ -9,6 +9,7 @@ alias df='df -h'
 alias grep='grep --color=auto'
 
 alias funkyass='mpv http://funkadelica.duckdns.org:8000/funkentelechy.ogg'
+alias musicaringa='mpv http://music.arin.ga:35745/mpd.ogg'
 
 #show the file and quit if it fits on one screen
 #alias less='less -FX'
@@ -20,6 +21,7 @@ alias psless='ps aux | less'
 
 alias n-di='ssh izabera@77.108.43.95 -p 2003'
 alias letame='ssh 31.220.48.33 -p 2212'
+alias aringa='ssh arin.ga'
 
 alias diff='colordiff'
 
