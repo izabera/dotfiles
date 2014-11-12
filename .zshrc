@@ -1,20 +1,19 @@
-# Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=1000000
 SAVEHIST=1000000
+
 setopt appendhistory autocd beep extendedglob nomatch notify prompt_subst
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'  
 #zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 bindkey -v
-# End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
 zstyle :compinstall filename "$HOME/.zshrc"
 
 autoload -Uz compinit colors zsh/terminfo zmv zrecompile edit-command-line
 compinit
+colors
+
 zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
-# End of lines added by compinstall
 
 source $HOME/.profile
 
@@ -30,8 +29,6 @@ NO_COLOR=$'%{\e[0m%}'
 PROMPT="${GREEN}%n${NO_COLOR}@${CYAN}%m ${RED}%~${NO_COLOR} %# "
 
 setopt prompt_subst
-autoload colors zsh/terminfo
-colors
  
 function __git_prompt () {
   __branch=$(git branch 2> /dev/null | grep "^* " | cut -c 2-)
@@ -53,18 +50,16 @@ function __git_prompt () {
 function __battery () {
   if [ -f /sys/class/power_supply/BAT0/capacity ]; then
     read __val < /sys/class/power_supply/BAT0/capacity
-  else
-    __val=0
+    echo -n " ["
+    for (( ; i < 10 ; i++ )) ; do
+      if (( i >= (__val/10) )) ; then
+        echo -n "${RED}=${NO_COLOR}"
+      else
+        echo -n "${GREEN}=${NO_COLOR}"
+      fi
+    done
+    echo -n "]"
   fi
-  echo -n " ["
-  for (( ; i < 10 ; i++ )) ; do
-    if (( i >= (__val/10) )) ; then
-      echo -n "${RED}=${NO_COLOR}"
-    else
-      echo -n "${GREEN}=${NO_COLOR}"
-    fi
-  done
-  echo -n "]"
 }
 
 function __return () {
