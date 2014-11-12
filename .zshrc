@@ -68,6 +68,18 @@ function __return () {
 
 RPROMPT='$(__return)$(__git_prompt)$(__battery)'
 
+fancy-ctrl-z () {
+  if [[ $#BUFFER -eq 0 ]]; then
+    BUFFER="fg"
+    zle accept-line
+  else
+    zle push-input
+    zle clear-screen
+  fi
+}
+zle -N fancy-ctrl-z
+bindkey '^Z' fancy-ctrl-z
+
 echo "================"
 echo " TODO:"
 TODO=$(cat $HOME/todo 2> /dev/null)
