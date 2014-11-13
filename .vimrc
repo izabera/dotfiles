@@ -29,10 +29,14 @@ vnoremap <C-c> "*y
 " misc mappings:
 " select all: C-a
 " insert new line in normal mode: <CR>
+" change from cursor to the beginning of the word: cb
+" change from cursor to the beginning of the Word: cB
 vnoremap <C-a> <Esc>ggVG
 inoremap <C-a> <Esc>ggVG
 " nnoremap <C-a> ggVG         " C-a == increment number
 nnoremap <CR> o<Esc>
+nnoremap cb cb<DEL>
+nnoremap cB cB<DEL>
 
 filetype plugin indent on
 syntax on

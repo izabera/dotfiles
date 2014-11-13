@@ -48,7 +48,10 @@ function __git_prompt () {
 function __battery () {
   if [ -f /sys/class/power_supply/BAT0/capacity ]; then
     read __val < /sys/class/power_supply/BAT0/capacity
-    echo -n " ["
+    read __bat < /sys/class/power_supply/BAT0/status
+    echo -n " "
+    [[ "$__bat" == "Discharging" ]] && echo -n "${RED}"
+    echo -n "[${NO_COLOR}"
     for (( ; i < 10 ; i++ )) ; do
       if (( i >= (__val/10) )) ; then
         echo -n "${RED}=${NO_COLOR}"
@@ -56,7 +59,8 @@ function __battery () {
         echo -n "${GREEN}=${NO_COLOR}"
       fi
     done
-    echo -n "]"
+    [[ "$__bat" == "Discharging" ]] && echo -n "${RED}"
+    echo -n "]${NO_COLOR}"
   fi
 }
 
