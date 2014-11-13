@@ -26,9 +26,7 @@ MAGENTA=$'%{\e[1;35m%}'
 YELLOW=$'%{\e[1;33m%}'
 NO_COLOR=$'%{\e[0m%}'
 
-PROMPT="${GREEN}%n${NO_COLOR}@${CYAN}%m ${RED}%~${NO_COLOR} %# "
-
-setopt prompt_subst
+setopt prompt_subst transientrprompt
  
 function __git_prompt () {
   __branch=$(git branch 2> /dev/null | grep "^* " | cut -c 2-)
@@ -66,7 +64,13 @@ function __return () {
   [[ "$?" == 0 ]] && echo -n "${GREEN}$?${NO_COLOR}" || echo -n "${RED}$?${NO_COLOR}"
 }
 
-RPROMPT='$(__return)$(__git_prompt)$(__battery)'
+#this version that only shows if something went wrong, which is good for coloring the PS1
+function __return_status () {
+  [[ "$?" == 0 ]] && echo -n "${GREEN}" || echo -n "${RED}"
+}
+
+PROMPT='${GREEN}%n${NO_COLOR}@${CYAN}%m ${RED}%~${NO_COLOR} $(__return_status)%#${NO_COLOR} '
+RPROMPT='$(__git_prompt)$(__battery)'
 
 fancy-ctrl-z () {
   if [[ $#BUFFER -eq 0 ]]; then
