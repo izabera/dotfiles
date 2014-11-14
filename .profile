@@ -1,6 +1,6 @@
 export PATH=$PATH:$HOME/bin
 
-alias ls='ls --color=auto'
+alias ls='ls -h --color=auto'
 alias la='ls -A'
 alias l='ls -l'
 alias free='free -h'
