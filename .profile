@@ -16,8 +16,16 @@ alias musicaringa='mpv http://music.arin.ga:35745/mpd.ogg'
 #hate it
 
 alias lsless='ls --color=always | less -R'
-alias psgrep='ps aux | grep'
 alias psless='ps aux | less'
+#easier than pgrep
+psgrep () {
+  ps aux | grep "$1" | grep -v "grep"
+}
+
+alias {:q,:wq,:wqa,:qa,:x,:xa}=exit
+alias :e=vim
+alias :h=man
+alias info='info --vi-keys'
 
 alias n-di='ssh izabera@77.108.43.95 -p 2003'
 alias letame='ssh 31.220.48.33 -p 2212'
@@ -29,7 +37,7 @@ alias updatedb='sudo updatedb'
 
 export EDITOR=vim
 
-function mkdirc {
+mkdirc () {
   if [ -z "$1" ] || [ -n "$2" ]; then
     echo "Usage: $0 directory"
     return 1
@@ -39,7 +47,7 @@ function mkdirc {
   fi
 }
 
-function uprm {
+uprm () {
   temp=$(basename $PWD)
   cd .. && rm -rf "$temp"
 }
