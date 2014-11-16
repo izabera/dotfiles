@@ -27,9 +27,9 @@ alias :e=vim
 alias :h=man
 alias info='info --vi-keys'
 
-alias n-di='ssh izabera@77.108.43.95 -p 2003'
-alias letame='ssh 31.220.48.33 -p 2212'
-alias aringa='if [[ "$HOST" == izaserver ]]; then cd /var/www/arin.ga/public_html ; else ssh arin.ga ; fi'
+alias sn-di='ssh izabera@77.108.43.95 -p 2003'
+alias sletame='ssh 31.220.48.33 -p 2212'
+alias saringa='if [[ "$HOST" == izaserver ]]; then cd /var/www/arin.ga/public_html ; else ssh arin.ga ; fi'
 
 alias diff='colordiff'
 
