@@ -112,7 +112,7 @@ URxvt*font:                           xft:monospace:size=8
 ! URxvt*imFont:                         fontname
 ! URxvt*title:                          string
 ! URxvt*iconName:                       string
-! URxvt*saveLines:                      number
+URxvt*saveLines:                      10000
 ! URxvt*buffered:                       boolean
 URxvt*depth:                          32
 ! URxvt*visual:                         number
