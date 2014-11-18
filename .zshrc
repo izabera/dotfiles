@@ -7,6 +7,7 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:
 #zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 bindkey -v
 zstyle :compinstall filename "$HOME/.zshrc"
+bindkey "^[[3~" delete-char
 
 autoload -Uz compinit colors zsh/terminfo zmv zrecompile edit-command-line
 compinit
