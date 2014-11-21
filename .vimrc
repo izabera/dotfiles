@@ -29,14 +29,18 @@ vnoremap <C-c> "*y
 " misc mappings:
 " select all: C-a
 " insert new line in normal mode: <CR>
-" change from cursor to the beginning of the word: cb
-" change from cursor to the beginning of the Word: cB
+" save 'with sudo' by using :w!!
 vnoremap <C-a> <Esc>ggVG
 inoremap <C-a> <Esc>ggVG
 " nnoremap <C-a> ggVG         " C-a == increment number
 nnoremap <CR> o<Esc>
-nnoremap cb cb<DEL>
-nnoremap cB cB<DEL>
+cmap w!! w !sudo tee > /dev/null %
+
+" change from cursor to the beginning of the word: cb
+" change from cursor to the beginning of the Word: cB
+" these two would be great but are messing up with the counters...
+"nnoremap cb cb<DEL>
+"nnoremap cB cB<DEL>
 
 filetype plugin indent on
 syntax on
@@ -95,3 +99,7 @@ map <C-Down> <Esc><C-w>-
 " run pathogen
 execute pathogen#infect()
 
+" open man page inside of vim
+runtime ftplugin/man.vim
+nnoremap K :Man <C-r><C-w><CR>
+vnoremap K :Man <C-r><C-w><CR>

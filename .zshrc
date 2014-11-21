@@ -9,7 +9,7 @@ bindkey -v
 zstyle :compinstall filename "$HOME/.zshrc"
 bindkey "^[[3~" delete-char
 
-autoload -Uz compinit colors zsh/terminfo zmv zrecompile edit-command-line
+autoload -Uz compinit colors zsh/terminfo zmv zrecompile edit-command-line add-zsh-hook
 compinit
 colors
 
@@ -29,6 +29,14 @@ NO_COLOR=$'%{\e[0m%}'
 
 setopt prompt_subst transientrprompt
  
+add-zsh-hook chpwd __git_enter
+function __git_enter () {
+  __status=$(git status --porcelain 2>/dev/null)
+  if [[ "x$__status" != "x" ]] ; then
+    git status
+  fi
+}
+
 function __git_prompt () {
   __branch=$(git branch 2> /dev/null | grep "^* " | cut -c 2-)
   if [[ "x$__branch" != "x" ]] ; then

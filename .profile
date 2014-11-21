@@ -7,6 +7,7 @@ alias free='free -h'
 alias du='du -h'
 alias df='df -h'
 alias grep='grep --color=auto'
+alias lynx='lynx -accept-all-cookies'
 
 alias funkyass='mpv http://funkadelica.duckdns.org:8000/funkentelechy.ogg'
 alias musicaringa='mpv http://music.arin.ga:35745/mpd.ogg'
@@ -19,7 +20,8 @@ alias lsless='ls --color=always | less -R'
 alias psless='ps aux | less'
 #easier than pgrep
 psgrep () {
-  ps aux | grep "$1" | grep -v "grep"
+  ps -C "$1" -o pid= | while read pid ; do echo $pid ; done
+  #ps aux | grep "$1" | grep -v "grep"
 }
 
 alias {:q,:wq,:wqa,:qa,:x,:xa}=exit
