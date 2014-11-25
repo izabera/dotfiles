@@ -107,12 +107,31 @@ __battery () {
   fi
 }
 
+__bwbattery () {
+  if [ -f /sys/class/power_supply/BAT0/capacity ]; then
+    read __val < /sys/class/power_supply/BAT0/capacity
+    read __bat < /sys/class/power_supply/BAT0/status
+    echo -n " "
+    [[ "$__bat" == "Discharging" ]] && echo -n "${RED}"
+    printf "["
+    for (( ; i < 10 ; i++ )) ; do
+      if (( i >= (__val/10) )) ; then
+        printf -- "-"
+      else
+        printf "="
+      fi
+    done
+    [[ "$__bat" == "Discharging" ]] && echo -n "${RED}"
+    printf "]"
+  fi
+}
+
 __return () {
   [[ "$?" == 0 ]] && echo -n "${GREEN}$?${NO_COLOR}" || echo -n "${RED}$?${NO_COLOR}"
 }
 
 #this version that only shows if something went wrong, which is good for coloring the PS1
 __return_status () {
-  [[ "$?" == 0 ]] && echo -n "${GREEN}" || echo -n "${RED}"
+  [[ "$?" == 0 ]] && echo "${GREEN}" || echo "${RED}"
 }
 
