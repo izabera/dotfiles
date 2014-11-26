@@ -5,6 +5,8 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+shopt -s checkwinsize
+
 BLUE=$'\e[1;34m'
 RED=$'\e[1;31m'
 GREEN=$'\e[1;32m'
@@ -15,26 +17,51 @@ YELLOW=$'\e[1;33m'
 NO_COLOR=$'\e[0m'
 
 __right_prompt () {
-  #better than nothing, but adding the colors will shift it to the left
   #__git=$(__git_prompt)
   __branch=$(git branch 2> /dev/null | grep "^* " | cut -c 2-)
-  if [[ "x$__branch" != "x" ]] ; then
+  __width=${#__branch}
+  if [[ -n $__branch ]] ; then
     __status=$(git status --porcelain)
-    if [[ "x$__status" != "x" ]] ; then
+    if [[ -n $__status ]] ; then
       __untracked=$(grep "^??" <<< "$__status")
-      if [[ "x$__untracked" == "x" ]] ; then
-        __branch="${__branch/ /*}"
+      if [[ -n $__untracked ]] ; then
+        __branch="$RED$__branch$NO_COLOR"
       else
-        __branch="${__branch/ /+}"
+        __branch="$YELLOW$__branch$NO_COLOR"
       fi
+    else
+      __branch="$GREEN$__branch$NO_COLOR"
     fi
   fi
-  COL=$(tput cols)
-  printf "%${COL}s\r" "${__branch}$(__bwbattery)"
+  #if [ -f /sys/class/power_supply/BAT0/capacity ]; then
+    #read __val < /sys/class/power_supply/BAT0/capacity
+    #read __bat < /sys/class/power_supply/BAT0/status
+    #__batterystatus=" "
+    ##__width=$(( __width + 12 ))
+    #if [[ "$__bat" == "Discharging" ]] ; then
+      #__batterystatus+="${RED}[${NO_COLOR}"
+    #else
+      #__batterystatus+="["
+    #fi
+    #for (( ; i < 10 ; i++ )) ; do
+      #if (( i >= (__val/10) )) ; then
+        #__batterystatus+="-"
+      #else
+        #__batterystatus+="="
+      #fi
+    #done
+    #if [[ "$__bat" == "Discharging" ]] ; then
+      #__batterystatus+="${RED}]${NO_COLOR}"
+    #else
+      #__batterystatus+="]"
+    #fi
+  #fi
+  __width=$((__width - ${#__branch} ))
+  printf "%*s\r" "$((COLUMNS-__width))" "$__branch" #$__branch$__batterystatus"
 }
 __chpwd () {
-  [[ -n $olddir ]] && [[ $olddir != $PWD ]] && __git_enter
-  olddir="$PWD"
+  [[ -n $__olddir ]] && [[ $__olddir != $PWD ]] && __git_enter
+  __olddir="$PWD"
 }
 
 source "$HOME/.profile"
