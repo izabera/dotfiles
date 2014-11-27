@@ -5,7 +5,7 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-shopt -s checkwinsize
+shopt -s checkwinsize autocd
 
 BLUE=$'\e[1;34m'
 RED=$'\e[1;31m'
@@ -17,7 +17,6 @@ YELLOW=$'\e[1;33m'
 NO_COLOR=$'\e[0m'
 
 __right_prompt () {
-  #__git=$(__git_prompt)
   __branch=$(git branch 2> /dev/null | grep "^* " | cut -c 2-)
   __width=${#__branch}
   if [[ -n $__branch ]] ; then
@@ -33,31 +32,33 @@ __right_prompt () {
       __branch="$GREEN$__branch$NO_COLOR"
     fi
   fi
-  #if [ -f /sys/class/power_supply/BAT0/capacity ]; then
-    #read __val < /sys/class/power_supply/BAT0/capacity
-    #read __bat < /sys/class/power_supply/BAT0/status
-    #__batterystatus=" "
-    ##__width=$(( __width + 12 ))
-    #if [[ "$__bat" == "Discharging" ]] ; then
-      #__batterystatus+="${RED}[${NO_COLOR}"
-    #else
-      #__batterystatus+="["
-    #fi
-    #for (( ; i < 10 ; i++ )) ; do
-      #if (( i >= (__val/10) )) ; then
-        #__batterystatus+="-"
-      #else
-        #__batterystatus+="="
-      #fi
-    #done
-    #if [[ "$__bat" == "Discharging" ]] ; then
-      #__batterystatus+="${RED}]${NO_COLOR}"
-    #else
-      #__batterystatus+="]"
-    #fi
-  #fi
+  if [ -f /sys/class/power_supply/BAT0/capacity ]; then
+    read __val < /sys/class/power_supply/BAT0/capacity
+    read __bat < /sys/class/power_supply/BAT0/status
+    __batterystatus=" "
+    if [[ "$__bat" == "Discharging" ]] ; then
+      __batterystatus+="$RED[$NO_COLOR"
+      __width=$((__width - 22 ))
+    else
+      __batterystatus+="["
+    fi
+    for (( i = 0 ; i < 10 ; i++ )) ; do
+      if (( i >= (__val/10) )) ; then
+        __width=$((__width - 11 ))
+        __batterystatus+="${RED}=${NO_COLOR}"
+      else
+        __width=$((__width - 11 ))
+        __batterystatus+="${GREEN}=${NO_COLOR}"
+      fi
+    done
+    if [[ "$__bat" == "Discharging" ]] ; then
+      __batterystatus+="$RED]$NO_COLOR"
+    else
+      __batterystatus+="]"
+    fi
+  fi
   __width=$((__width - ${#__branch} ))
-  printf "%*s\r" "$((COLUMNS-__width))" "$__branch" #$__branch$__batterystatus"
+  printf "%*s\r" "$((COLUMNS-__width))" "$__branch$__batterystatus"
 }
 __chpwd () {
   [[ -n $__olddir ]] && [[ $__olddir != $PWD ]] && __git_enter

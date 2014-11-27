@@ -12,6 +12,8 @@ alias lynx='lynx -accept-all-cookies'
 alias funkyass='mpv http://funkadelica.duckdns.org:8000/funkentelechy.ogg'
 alias musicaringa='mpv http://music.arin.ga:35745/mpd.ogg'
 
+alias -- -='cd -'
+
 #show the file and quit if it fits on one screen
 #alias less='less -FX'
 #hate it
@@ -53,6 +55,8 @@ uprm () {
   temp=$(basename $PWD)
   cd .. && rm -rf "$temp"
 }
+
+yt () { youtube-dl "$1" -o - | mpv - ; }
 
 echo "================"
 echo " TODO:"
