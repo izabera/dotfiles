@@ -1,4 +1,6 @@
-export PATH="$PATH:$HOME/bin"
+[ -n "$YEAR" ] || YEAR=$(date +%Y)
+[ -n "$MACHINE" ] || MACHINE=$(uname -m)
+export PATH="/usr/local/texlive/$YEAR/bin/$MACHINE:$PATH:$HOME/bin"
 export ENV="$HOME/.profile"
 
 alias la='ls -A'
