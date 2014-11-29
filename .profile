@@ -1,18 +1,48 @@
-export PATH=$PATH:$HOME/bin
+export PATH="$PATH:$HOME/bin"
+export ENV="$HOME/.profile"
 
-alias ls='ls -h --color=auto'
 alias la='ls -A'
+alias ll='ls -Al'
 alias l='ls -l'
-alias free='free -h'
 alias du='du -h'
 alias df='df -h'
-alias grep='grep --color=auto'
 alias lynx='lynx -accept-all-cookies'
 
 alias funkyass='mpv http://funkadelica.duckdns.org:8000/funkentelechy.ogg'
 alias musicaringa='mpv http://music.arin.ga:35745/mpd.ogg'
 
-alias -- -='cd -'
+alias ..='cd ..'
+alias ...='cd ../..'
+
+# bash or zsh or busybox sh
+
+if [ "$BASH_VERSION" ] ; then
+  alias -- -='[ "$OLDPWD" ] && cd - || printf "%s\n" "$PWD"'
+elif  [ "$ZSH_VERSION" ] ; then
+  alias -- "."=source
+  alias -- -='cd -'
+else
+  alias -='cd -'
+fi
+
+if [ "$BASH_VERSION" ] || [ "$ZSH_VERSION" ] ; then
+  alias ls='ls -h --color=auto'
+  alias grep='grep --color=auto'
+  alias free='free -h'
+else
+  alias ls='ls -h'
+fi
+
+
+BLUE=$'\e[1;34m'
+RED=$'\e[1;31m'
+GREEN=$'\e[1;32m'
+CYAN=$'\e[1;36m'
+WHITE=$'\e[1;37m'
+MAGENTA=$'\e[1;35m'
+YELLOW=$'\e[1;33m'
+NO_COLOR=$'\e[0m'
+
 
 #show the file and quit if it fits on one screen
 #alias less='less -FX'
@@ -20,20 +50,27 @@ alias -- -='cd -'
 
 alias lsless='ls --color=always | less -R'
 alias psless='ps aux | less'
+
 #easier than pgrep
 psgrep () {
   ps -C "$1" -o pid= | while read pid ; do echo $pid ; done
   #ps aux | grep "$1" | grep -v "grep"
 }
 
-alias {:q,:wq,:wqa,:qa,:x,:xa}=exit
+#alias {:q,:wq,:wqa,:qa,:x,:xa}=exit
+#fucking idiotic sh
+alias :q=exit
+alias :wq=exit
+alias :wqa=exit
+alias :x=exit
+alias :xa=exit
 alias :e=vim
 alias :h=man
 alias info='info --vi-keys'
 
 alias sn-di='ssh izabera@77.108.43.95 -p 2003'
 alias sletame='ssh 31.220.48.33 -p 2212'
-alias saringa='if [[ "$HOST" == izaserver ]]; then cd /var/www/arin.ga/public_html ; else ssh arin.ga ; fi'
+alias saringa='[ "$HOST" = izaserver ] && cd /var/www/arin.ga/public_html || ssh arin.ga'
 
 alias diff='colordiff'
 
@@ -42,8 +79,8 @@ alias updatedb='sudo updatedb'
 export EDITOR=vim
 
 mkdirc () {
-  if [ -z "$1" ] || [ -n "$2" ]; then
-    echo "Usage: $0 directory"
+  if ! [ -n "$1" ] || [ -n "$2" ]; then
+    printf "Usage: %s directory" "$0"
     return 1
   else
     mkdir -p "$1"
@@ -52,42 +89,43 @@ mkdirc () {
 }
 
 uprm () {
-  temp=$(basename $PWD)
+  temp=$(basename "$PWD")
   cd .. && rm -rf "$temp"
 }
 
 yt () { youtube-dl "$1" -o - | mpv - ; }
 
-echo "================"
-echo " TODO:"
+printf "================\n"
+printf " TODO:\n"
 TODO=$(cat $HOME/todo 2> /dev/null)
-if [[ -z "$TODO" ]]; then
-  echo "nothing"
+if [ -n "$TODO" ]; then
+  printf "%s\n" "$TODO"
 else
-  echo "$TODO"
+  printf "nothing\n"
 fi
-echo "================"
+printf "================\n"
 
 __git_enter () {
   __status=$(git status --porcelain 2>/dev/null)
-  if [[ "x$__status" != "x" ]] ; then
+  if [ -n "$__status" ] ; then
     git status
   fi
 }
 
 __git_prompt () {
-  __branch=$(git branch 2> /dev/null | grep "^* " | cut -c 2-)
-  if [[ "x$__branch" != "x" ]] ; then
+  __branch=$(git symbolic-ref --short HEAD 2> /dev/null)
+  if [ -n "$__branch" ] ; then
     __status=$(git status --porcelain)
-    if [[ "x$__status" != "x" ]] ; then
-      __untracked=$(grep "^??" <<< "$__status")
-      if [[ "x$__untracked" == "x" ]] ; then
-        echo "${YELLOW}$__branch${NO_COLOR}"
+    if [ -n "$__status" ] ; then
+      #__untracked=$(grep "^??" <<< "$__status")
+      __untracked=$(printf "%s" "$__status" | grep "^??")
+      if [ -n "$__untracked" ] ; then
+        printf "%s%s%s" "$RED" "$__branch" "$NO_COLOR"
       else
-        echo "${RED}$__branch${NO_COLOR}"
+        printf "%s%s%s" "$YELLOW" "$__branch" "$NO_COLOR"
       fi
     else 
-      echo -n "${GREEN}$__branch${NO_COLOR}"
+      printf "%s%s%s" "$GREEN" "$__branch" "$NO_COLOR"
     fi
   fi
 }
@@ -96,18 +134,26 @@ __battery () {
   if [ -f /sys/class/power_supply/BAT0/capacity ]; then
     read __val < /sys/class/power_supply/BAT0/capacity
     read __bat < /sys/class/power_supply/BAT0/status
-    echo -n " "
-    [[ "$__bat" == "Discharging" ]] && echo -n "${RED}"
-    echo -n "[${NO_COLOR}"
-    for (( ; i < 10 ; i++ )) ; do
-      if (( i >= (__val/10) )) ; then
-        echo -n "${RED}=${NO_COLOR}"
+    if [ "$__bat" = "Discharging" ]; then
+      printf " %s[%s" "$RED" "$NO_COLOR"
+    else
+      printf " ["
+    fi
+    #for (( i = 0 ; i < 10 ; i++ )) ; do
+      #if (( i >= (__val/10) )) ; then
+      #fucking sh
+    for i in {0..10} ; do
+      if [ $i -gt $((__val/10)) ] ; then
+        printf '%s=%s' "$RED" "$NO_COLOR"
       else
-        echo -n "${GREEN}=${NO_COLOR}"
+        printf '%s=%s' "$GREEN" "$NO_COLOR"
       fi
     done
-    [[ "$__bat" == "Discharging" ]] && echo -n "${RED}"
-    echo -n "]${NO_COLOR}"
+    if [ "$__bat" = "Discharging" ]; then
+      printf "%s]%s" "$RED" "$NO_COLOR"
+    else
+      printf "]"
+    fi
   fi
 }
 
@@ -115,27 +161,77 @@ __bwbattery () {
   if [ -f /sys/class/power_supply/BAT0/capacity ]; then
     read __val < /sys/class/power_supply/BAT0/capacity
     read __bat < /sys/class/power_supply/BAT0/status
-    echo -n " "
-    [[ "$__bat" == "Discharging" ]] && echo -n "${RED}"
-    printf "["
-    for (( ; i < 10 ; i++ )) ; do
-      if (( i >= (__val/10) )) ; then
+    printf " ["
+    for i in {0..10} ; do
+      if [ $i -gt $((__val/10)) ] ; then
         printf -- "-"
       else
         printf "="
       fi
     done
-    [[ "$__bat" == "Discharging" ]] && echo -n "${RED}"
     printf "]"
   fi
 }
 
 __return () {
-  [[ "$?" == 0 ]] && echo -n "${GREEN}$?${NO_COLOR}" || echo -n "${RED}$?${NO_COLOR}"
+  [ "$?" = 0 ] && printf "%s%d%s" "$GREEN" "$?" "$NO_COLOR" || printf "%s%d%s" "$RED" "$?" "$NO_COLOR"
 }
 
 #this version that only shows if something went wrong, which is good for coloring the PS1
 __return_status () {
-  [[ "$?" == 0 ]] && echo "${GREEN}" || echo "${RED}"
+  [ "$?" = 0 ] && printf "%s" "$GREEN" || printf "%s" "$RED"
 }
 
+__right_prompt () {
+  __branch=$(git symbolic-ref --short HEAD 2> /dev/null)
+  __width=${#__branch}
+  if [ -n "$__branch" ] ; then
+    __status=$(git status --porcelain)
+    if [ -n "$__status" ] ; then
+      __untracked=$(printf "%s\n" "$__status" | grep "^??")
+      if [ -n "$__untracked" ] ; then
+        __branch="$RED$__branch$NO_COLOR"
+      else
+        __branch="$YELLOW$__branch$NO_COLOR"
+      fi
+    else
+      __branch="$GREEN$__branch$NO_COLOR"
+    fi
+  fi
+
+  if [ -f /sys/class/power_supply/BAT0/capacity ]; then
+    read __val < /sys/class/power_supply/BAT0/capacity
+    read __bat < /sys/class/power_supply/BAT0/status
+    __batterystatus=" "
+    if [ "$__bat" = "Discharging" ] ; then
+      __batterystatus+="$RED[$NO_COLOR"
+      __width=$((__width - 22 ))
+    else
+      __batterystatus+="["
+    fi
+    for i in {0..10} ; do
+      if [ $i -gt $((__val/10)) ] ; then
+        __width=$((__width - 11 ))
+        __batterystatus+="${RED}=${NO_COLOR}"
+      else
+        __width=$((__width - 11 ))
+        __batterystatus+="${GREEN}=${NO_COLOR}"
+      fi
+    done
+    if [ "$__bat" = "Discharging" ] ; then
+      __batterystatus+="$RED]$NO_COLOR"
+    else
+      __batterystatus+="]"
+    fi
+  fi
+  __width=$((__width - ${#__branch} ))
+  printf "%*s\r" "$((COLUMNS-__width))" "$__branch$__batterystatus"
+}
+
+__chpwd () {
+  [ -n "$__olddir" ] && ! [ "$__olddir" = "$PWD" ] && __git_enter
+  __olddir="$PWD"
+}
+
+HISTFILE=~/.histfile
+PS1='\[${GREEN}\]\u\[${NO_COLOR}\]@\[${CYAN}\]\h\[${NO_COLOR}\] \[${RED}\]\w\[${NO_COLOR}\] \[$(__return_status)\]\$\[${NO_COLOR}\] '

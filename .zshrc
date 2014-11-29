@@ -1,6 +1,7 @@
-HISTFILE=~/.histfile
 HISTSIZE=1000000
 SAVEHIST=1000000
+
+source $HOME/.profile
 
 setopt appendhistory autocd beep extendedglob nomatch notify prompt_subst
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'  
@@ -44,5 +45,4 @@ fancy-ctrl-z () {
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
-source $HOME/.profile
 
