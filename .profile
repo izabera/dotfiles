@@ -1,6 +1,10 @@
-[ -n "$YEAR" ] || YEAR=$(date +%Y)
-[ -n "$MACHINE" ] || MACHINE=$(uname -m)
-export PATH="/usr/local/texlive/$YEAR/bin/${MACHINE}-linux:$PATH:$HOME/bin"
+if [ "$HOST" = izaserver ] ; then
+  export PATH="/usr/local/texlive/2014/bin/x86_64-linux:$PATH:$HOME/bin"
+  alias saringa='cd /var/www/arin.ga/public_html'
+else
+  export PATH="$PATH:$HOME/bin"
+  alias saringa='ssh arin.ga'
+fi
 export ENV="$HOME/.profile"
 
 alias la='ls -A'
@@ -55,7 +59,9 @@ alias psless='ps aux | less'
 
 #easier than pgrep
 psgrep () {
-  ps -C "$1" -o pid= | while read pid ; do echo $pid ; done
+  #ps -C "$1" -o pid= | while read pid ; do echo $pid ; done
+  __ps_aux=$(ps aux)
+  
   #ps aux | grep "$1" | grep -v "grep"
 }
 
@@ -72,7 +78,6 @@ alias info='info --vi-keys'
 
 alias sn-di='ssh izabera@77.108.43.95 -p 2003'
 alias sletame='ssh 31.220.48.33 -p 2212'
-alias saringa='[ "$HOST" = izaserver ] && cd /var/www/arin.ga/public_html || ssh arin.ga'
 
 alias diff='colordiff'
 
