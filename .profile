@@ -96,21 +96,25 @@ mkdirc () {
 }
 
 uprm () {
-  temp=$(basename "$PWD")
-  cd .. && rm -rf "$temp"
+  if [ "${PWD%/*}" = /home ] ; then
+    echo Nope.
+    return 1
+  else
+    cd .. && rm -rf "$OLDPWD"
+  fi
 }
 
 yt () { youtube-dl "$1" -o - | mpv - ; }
 
-printf "================\n"
-printf " TODO:\n"
 TODO=$(cat $HOME/todo 2> /dev/null)
-if [ -n "$TODO" ]; then
-  printf "%s\n" "$TODO"
-else
-  printf "nothing\n"
-fi
-printf "================\n"
+if ! [ -n "$TODO" ]; then TODO=nothing ; fi
+
+cat << EOF
+================
+ TODO:
+$TODO
+================
+EOF
 
 __git_enter () {
   __status=$(git status --porcelain 2>/dev/null)

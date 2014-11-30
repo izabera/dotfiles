@@ -1,5 +1,4 @@
-#!/bin/bash
-shopt -s dotglob
+#!/bin/sh
 for file in ~/dotfiles/.* ; do
   ln -s "$file" "$HOME/${file##*/}"
 done
