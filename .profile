@@ -13,6 +13,7 @@ alias l='ls -l'
 alias du='du -h'
 alias df='df -h'
 alias lynx='lynx -accept-all-cookies'
+alias fbterm='fbterm --font-size=11 --term=fbterm'
 
 alias funkyass='mpv http://funkadelica.duckdns.org:8000/funkentelechy.ogg'
 alias musicaringa='mpv http://music.arin.ga:35745/mpd.ogg'
@@ -35,19 +36,27 @@ if [ "$BASH_VERSION" ] || [ "$ZSH_VERSION" ] ; then
   alias ls='ls -h --color=auto'
   alias grep='grep --color=auto'
   alias free='free -h'
+  PS1='$GREEN\u$NO_COLOR@$CYAN\h$NO_COLOR $RED\w$NO_COLOR $(__return_status)\$$NO_COLOR '
 else
   alias ls='ls -h'
 fi
 
 
-BLUE=$'\e[1;34m'
-RED=$'\e[1;31m'
-GREEN=$'\e[1;32m'
-CYAN=$'\e[1;36m'
-WHITE=$'\e[1;37m'
-MAGENTA=$'\e[1;35m'
-YELLOW=$'\e[1;33m'
-NO_COLOR=$'\e[0m'
+#BLUE=$'\e[1;34m'
+#RED=$'\e[1;31m'
+#GREEN=$'\e[1;32m'
+#CYAN=$'\e[1;36m'
+#WHITE=$'\e[1;37m'
+#MAGENTA=$'\e[1;35m'
+#YELLOW=$'\e[1;33m'
+#NO_COLOR=$'\e[0m'
+BLUE=$(tput setaf 4)
+RED=$(tput setaf 1)
+GREEN=$(tput setaf 2)
+CYAN=$(tput setaf 6)
+WHITE=$(tput setaf 7)
+YELLOW=$(tput setaf 3)
+NO_COLOR=$(tput sgr 0)
 
 
 #show the file and quit if it fits on one screen
@@ -216,16 +225,16 @@ __right_prompt () {
     __batterystatus=" "
     if [ "$__bat" = "Discharging" ] ; then
       __batterystatus+="$RED[$NO_COLOR"
-      __width=$((__width - 22 ))
+      #__width=$((__width - 22 ))
     else
       __batterystatus+="["
     fi
     for i in {0..10} ; do
       if [ $i -gt $((__val/10)) ] ; then
-        __width=$((__width - 11 ))
+        #__width=$((__width - 11 ))
         __batterystatus+="${RED}=${NO_COLOR}"
       else
-        __width=$((__width - 11 ))
+        #__width=$((__width - 11 ))
         __batterystatus+="${GREEN}=${NO_COLOR}"
       fi
     done
@@ -236,7 +245,9 @@ __right_prompt () {
     fi
   fi
   __width=$((__width - ${#__branch} ))
+  #printf "%*s\r" "$((COLUMNS-__width))" "$__branch" #$__batterystatus"
   printf "%*s\r" "$((COLUMNS-__width))" "$__branch$__batterystatus"
+  #printf "%*s\r" "$((COLUMNS))" "$__branch" # $__batterystatus"
 }
 
 __chpwd () {
@@ -244,5 +255,9 @@ __chpwd () {
   __olddir="$PWD"
 }
 
+backup () {
+  for file ; do cp "$file" "/backup/$(date +%Y-%m-%d-%H-%M-%S-)${file##*/}" ; done
+}
+
 HISTFILE=~/.histfile
-PS1='\[${GREEN}\]\u\[${NO_COLOR}\]@\[${CYAN}\]\h\[${NO_COLOR}\] \[${RED}\]\w\[${NO_COLOR}\] \[$(__return_status)\]\$\[${NO_COLOR}\] '
+#PS1='\[${GREEN}\]\u\[${NO_COLOR}\]@\[${CYAN}\]\h\[${NO_COLOR}\] \[${RED}\]\w\[${NO_COLOR}\] \[$(__return_status)\]\$\[${NO_COLOR}\] '
