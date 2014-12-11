@@ -28,8 +28,8 @@ URxvt*scrollWithBuffer:               true
 ! URxvt*tintColor:                      color
 ! URxvt*shading:                        12
 ! URxvt*blurRadius:                     HxV
-! URxvt*fading:                         number
-! URxvt*fadeColor:                      color
+!URxvt*fading:                         80
+! URxvt*fadeColor:                      [80]#000000
 ! URxvt*utmpInhibit:                    boolean
 ! URxvt*urgentOnBell:                   boolean
 ! URxvt*visualBell:                     boolean

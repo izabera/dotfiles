@@ -14,6 +14,7 @@ alias du='du -h'
 alias df='df -h'
 alias lynx='lynx -accept-all-cookies'
 alias fbterm='fbterm --font-size=11 --term=fbterm'
+alias s0='sudo shutdown 0'
 
 alias funkyass='mpv http://funkadelica.duckdns.org:8000/funkentelechy.ogg'
 alias musicaringa='mpv http://music.arin.ga:35745/mpd.ogg'
@@ -37,6 +38,8 @@ if [ "$BASH_VERSION" ] || [ "$ZSH_VERSION" ] ; then
   alias grep='grep --color=auto'
   alias free='free -h'
   PS1='$GREEN\u$NO_COLOR@$CYAN\h$NO_COLOR $RED\w$NO_COLOR $(__return_status)\$$NO_COLOR '
+  # stupid mksh will corrupt it
+  HISTFILE=~/.histfile
 else
   alias ls='ls -h'
 fi
@@ -113,7 +116,15 @@ uprm () {
   fi
 }
 
-yt () { youtube-dl "$1" -o - | mpv - ; }
+yt () {
+  ((!$#)) && return 1
+  case "$1" in 
+    d) youtube-dl -f "$@" ;;
+    f) youtube-dl -F "$@" ;;
+    v) youtube-dl -f "$@" -o - | mpv - ;;
+    *) youtube-dl "$@" -o - | mpv - ;;
+  esac
+}
 
 TODO=$(cat $HOME/todo 2> /dev/null)
 if ! [ -n "$TODO" ]; then TODO=nothing ; fi
@@ -259,5 +270,19 @@ backup () {
   for file ; do cp "$file" "/backup/$(date +%Y-%m-%d-%H-%M-%S-)${file##*/}" ; done
 }
 
-HISTFILE=~/.histfile
 #PS1='\[${GREEN}\]\u\[${NO_COLOR}\]@\[${CYAN}\]\h\[${NO_COLOR}\] \[${RED}\]\w\[${NO_COLOR}\] \[$(__return_status)\]\$\[${NO_COLOR}\] '
+
+
+plan9 () {
+  ((!$#)) && return 1
+  prog="$1"
+  shift
+  "/usr/lib/plan9/bin/$prog" "$@"
+}
+
+posix () {
+  ((!$#)) && return 1
+  prog="$1"
+  shift
+  "/usr/lib/posix/bin/$prog" "$@"
+}
