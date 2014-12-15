@@ -7,7 +7,7 @@ Xft.lcdfilter:          lcddefault
 Xft.rgba:               rgb
 
 ! URxvt*termName:                       string
-URxvt*geometry:                       110x35
+*geometry:                       110x35
 ! URxvt*chdir:                          string
 ! URxvt*reverseVideo:                   boolean
 ! URxvt*loginShell:                     boolean
@@ -44,8 +44,8 @@ URxvt*scrollWithBuffer:               true
 URxvt*background:                     [90]#111111
 URxvt*foreground:                     #babdb6
 ! tangoesque scheme
-!*background: #111111
-!*foreground: #babdb6
+*background: #111111
+*foreground: #babdb6
 ! Black (not tango) + DarkGrey
 *color0:  #000000
 *color8:  #555753
@@ -162,4 +162,13 @@ URxvt*secondaryScroll:                0
 ! URxvt*tab-fg:                         colour
 ! URxvt*tabbar-bg:                      colour
 ! URxvt*tabbar-fg:                      colour
-! URxvt*url-launcher:                   string
+ URxvt*url-launcher:                   /usr/bin/dwb
+!
+ URxvt.perl-ext: default,url-select
+ URxvt.keysym.M-u: perl:url-select:select_next
+ URxvt.url-select.launcher: /usr/bin/dwb
+ URxvt.url-select.underline: true
+
+!xterm*faceName:                         monospace
+xterm*faceName:                         xft:monospace:size=8
+xterm*font:                             8

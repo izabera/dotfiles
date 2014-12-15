@@ -10,11 +10,11 @@ shopt -u sourcepath
 
 set -o vi
 
-source "$HOME/.profile"
+#source "$HOME/.profile"
 export LIBASHDIR="$HOME/sv/libash"
 source "$LIBASHDIR/libash"
 
 #PROMPT_COMMAND='__chpwd; __right_prompt'
-PROMPT_COMMAND='__chpwd'
+#PROMPT_COMMAND='__chpwd'
 
-PS1='\[${GREEN}\]\u\[${NO_COLOR}\]@\[${CYAN}\]\h\[${NO_COLOR}\] \[${RED}\]\w\[${NO_COLOR}\] \[$(__return_status)\]\$\[${NO_COLOR}\] '
+#PS1='\[${GREEN}\]\u\[${NO_COLOR}\]@\[${CYAN}\]\h\[${NO_COLOR}\] \[${RED}\]\w\[${NO_COLOR}\] \[$(__return_status)\]\$\[${NO_COLOR}\] '

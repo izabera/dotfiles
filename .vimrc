@@ -16,6 +16,9 @@ set smartcase
 set bs=eol,indent,start
 set cursorline
 
+set noerrorbells visualbell t_vb=
+
+
 "set hlsearch
 set incsearch
 

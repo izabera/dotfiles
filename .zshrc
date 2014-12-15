@@ -10,6 +10,8 @@ bindkey -v
 zstyle :compinstall filename "$HOME/.zshrc"
 bindkey "^[[3~" delete-char
 
+setopt NO_BEEP
+
 autoload -Uz compinit colors zsh/terminfo zmv zrecompile edit-command-line add-zsh-hook
 compinit
 colors

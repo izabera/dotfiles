@@ -16,6 +16,9 @@ alias lynx='lynx -accept-all-cookies'
 alias fbterm='fbterm --font-size=11 --term=fbterm'
 alias s0='sudo shutdown 0'
 
+alias man='man --nj --nh'
+# so that urxvt doesn't break the links
+
 alias funkyass='mpv http://funkadelica.duckdns.org:8000/funkentelechy.ogg'
 alias musicaringa='mpv http://music.arin.ga:35745/mpd.ogg'
 
@@ -29,6 +32,7 @@ if [ "$BASH_VERSION" ] ; then
 elif  [ "$ZSH_VERSION" ] ; then
   alias -- "."=source
   alias -- -='cd -'
+  HISTFILE=~/.histfile
 else
   alias -='cd -'
 fi
@@ -37,9 +41,8 @@ if [ "$BASH_VERSION" ] || [ "$ZSH_VERSION" ] ; then
   alias ls='ls -h --color=auto'
   alias grep='grep --color=auto'
   alias free='free -h'
-  PS1='$GREEN\u$NO_COLOR@$CYAN\h$NO_COLOR $RED\w$NO_COLOR $(__return_status)\$$NO_COLOR '
+  #PS1='$green\u$no_color@$cyan\h$no_color $red\w$no_color $(return_status)\$$no_color '
   # stupid mksh will corrupt it
-  HISTFILE=~/.histfile
 else
   alias ls='ls -h'
 fi
@@ -53,13 +56,15 @@ fi
 #MAGENTA=$'\e[1;35m'
 #YELLOW=$'\e[1;33m'
 #NO_COLOR=$'\e[0m'
-BLUE=$(tput setaf 4)
-RED=$(tput setaf 1)
-GREEN=$(tput setaf 2)
-CYAN=$(tput setaf 6)
-WHITE=$(tput setaf 7)
-YELLOW=$(tput setaf 3)
-NO_COLOR=$(tput sgr 0)
+#BLUE=$(tput setaf 4)
+#RED=$(tput setaf 1)
+#GREEN=$(tput setaf 2)
+#CYAN=$(tput setaf 6)
+#WHITE=$(tput setaf 7)
+#YELLOW=$(tput setaf 3)
+#NO_COLOR=$(tput sgr 0)
+
+#export LESS='-QUIET'
 
 
 #show the file and quit if it fits on one screen
@@ -275,14 +280,29 @@ backup () {
 
 plan9 () {
   ((!$#)) && return 1
-  prog="$1"
+  prog=$1
   shift
   "/usr/lib/plan9/bin/$prog" "$@"
 }
 
 posix () {
   ((!$#)) && return 1
-  prog="$1"
+  prog=$1
   shift
   "/usr/lib/posix/bin/$prog" "$@"
 }
+
+heirloom () {
+  ((!$#)) && return 1
+  prog=$1
+  shift
+  "/usr/heirloom/bin/$prog" "$@"
+}
+
+suckless () {
+  ((!$#)) && return 1
+  prog=$1
+  shift
+  "/usr/suckless/bin/$prog" "$@"
+}
+
