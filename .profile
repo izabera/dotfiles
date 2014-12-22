@@ -10,14 +10,19 @@ export ENV="$HOME/.profile"
 alias la='ls -A'
 alias ll='ls -Al'
 alias l='ls -l'
+
 alias du='du -h'
 alias df='df -h'
 alias lynx='lynx -accept-all-cookies'
-alias fbterm='fbterm --font-size=11 --term=fbterm'
+#alias fbterm='fbterm --font-size=11 --term=fbterm'
 alias s0='sudo shutdown 0'
 
-alias man='man --nj --nh'
+# any charset that doesn't exist will restore the default |-- and `--
+# instead of the crappy unicode replacements ├── and └──
+alias tree='tree --charset fail'
+
 # so that urxvt doesn't break the links
+alias man='man --nj --nh'
 
 alias funkyass='mpv http://funkadelica.duckdns.org:8000/funkentelechy.ogg'
 alias musicaringa='mpv http://music.arin.ga:35745/mpd.ogg'
@@ -37,6 +42,7 @@ else
   alias -='cd -'
 fi
 
+# FIXME: crappy way to check if we're using busybox/toybox
 if [ "$BASH_VERSION" ] || [ "$ZSH_VERSION" ] ; then
   alias ls='ls -h --color=auto'
   alias grep='grep --color=auto'
@@ -64,8 +70,6 @@ fi
 #YELLOW=$(tput setaf 3)
 #NO_COLOR=$(tput sgr 0)
 
-#export LESS='-QUIET'
-
 
 #show the file and quit if it fits on one screen
 #alias less='less -FX'
@@ -74,16 +78,25 @@ fi
 alias lsless='ls --color=always | less -R'
 alias psless='ps aux | less'
 
-#easier than pgrep
+#!/bin/sh
+#basic portable pgrep
 psgrep () {
-  #ps -C "$1" -o pid= | while read pid ; do echo $pid ; done
-  __ps_aux=$(ps aux)
-  
-  #ps aux | grep "$1" | grep -v "grep"
+  # only one arg, to prevent unexpected results when input is 'foo*bar'
+  [ "$#" -eq 1 ] && ps -e -o pid= -o args= | {
+  # there's no portable way to know the pid of that ps
+    ret=1
+    while read -r pid name ; do
+      case $name in *$1*)  # quoting $1 would make it literal, this way it works as a glob
+        [ ! "$pid" -eq "$$" ] && echo "$pid" && ret=0
+        ;;
+      esac
+    done
+    return "$ret"
+  }
 }
 
 #alias {:q,:wq,:wqa,:qa,:x,:xa}=exit
-#fucking idiotic sh
+#fucking idiotic dash
 alias :q=exit
 alias :wq=exit
 alias :wqa=exit
@@ -304,5 +317,9 @@ suckless () {
   prog=$1
   shift
   "/usr/suckless/bin/$prog" "$@"
+}
+
+snippet () {
+  curl "$1" | vim ${2++'set ft='"$2"} +'set ts=2 sts=2 sw=2 sta et' +'normal gg=G' +'set nomodified' - 
 }
 
