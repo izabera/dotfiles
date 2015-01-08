@@ -323,3 +323,6 @@ snippet () {
   curl "$1" | vim ${2++'set ft='"$2"} +'set ts=2 sts=2 sw=2 sta et' +'normal gg=G' +'set nomodified' - 
 }
 
+curlpic () { curl "$1" | feh - ; } 
+
+export ALARMTIME=07:05

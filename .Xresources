@@ -7,10 +7,11 @@ Xft.lcdfilter:          lcddefault
 Xft.rgba:               rgb
 
 ! URxvt*termName:                       string
-*geometry:                       110x35
+!*geometry:                       130x35
+*geometry:                        110x35
 ! URxvt*chdir:                          string
 ! URxvt*reverseVideo:                   boolean
-! URxvt*loginShell:                     boolean
+URxvt*loginShell:                     true
 ! URxvt*jumpScroll:                     boolean
 ! URxvt*skipScroll:                     boolean
 ! URxvt*pastableTabs:                   boolean
@@ -102,6 +103,8 @@ URxvt*colorUL:                        yellow
 ! URxvt*borderColor:                    color
 ! URxvt*iconFile:                       file
 URxvt*font:                           xft:monospace:size=8
+!URxvt*font:                           xft:terminus:size=8
+!urxvt*font:                           -*-terminus--r-*-*-12-*-*-*-*-*-*-*
 ! URxvt*boldFont:                       fontname
 ! URxvt*italicFont:                     fontname
 ! URxvt*boldItalicFont:                 fontname
@@ -165,7 +168,7 @@ URxvt*secondaryScroll:                0
  URxvt*url-launcher:                   /usr/bin/dwb
 !
  URxvt.perl-ext: default,url-select
- URxvt.keysym.M-u: perl:url-select:select_next
+ URxvt.keysym.C-l: perl:url-select:select_next
  URxvt.url-select.launcher: /usr/bin/dwb
  URxvt.url-select.underline: true
 
