@@ -78,23 +78,6 @@ fi
 alias lsless='ls --color=always | less -R'
 alias psless='ps aux | less'
 
-#!/bin/sh
-#basic portable pgrep
-psgrep () {
-  # only one arg, to prevent unexpected results when input is 'foo*bar'
-  [ "$#" -eq 1 ] && ps -e -o pid= -o args= | {
-  # there's no portable way to know the pid of that ps
-    ret=1
-    while read -r pid name ; do
-      case $name in *$1*)  # quoting $1 would make it literal, this way it works as a glob
-        [ ! "$pid" -eq "$$" ] && echo "$pid" && ret=0
-        ;;
-      esac
-    done
-    return "$ret"
-  }
-}
-
 #alias {:q,:wq,:wqa,:qa,:x,:xa}=exit
 #fucking idiotic dash
 alias :q=exit

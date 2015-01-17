@@ -1,0 +1,7 @@
+set completion-ignore-case on
+set bell-style none
+set colored-stats on
+"\t":menu-complete
+"\C-[":complete
+"\C-[[Z":menu-complete-backward
+"\C-A":possible-completions

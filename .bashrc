@@ -61,3 +61,4 @@ alias dmsgl='dmesg --color=always | less -R +G'
 
 alias sletame='ssh 31.220.48.33 -p 2212'
 alias saringa='ssh arin.ga'
+alias netup='ping -c 1 arin.ga'
