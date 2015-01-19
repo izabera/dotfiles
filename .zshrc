@@ -5,7 +5,8 @@ source $HOME/.profile
 
 setopt appendhistory autocd beep extendedglob nomatch notify prompt_subst
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'  
-#zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
+
 bindkey -v
 zstyle :compinstall filename "$HOME/.zshrc"
 bindkey "^[[3~" delete-char

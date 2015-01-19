@@ -55,8 +55,8 @@ export ALARMTIME=07:05
 
 export EDITOR=vim
 
-# dmesg in less and go to the end
-alias dmsgl='dmesg --color=always | less -R +G'
+dmsgl () { dmesg --color=always | less -R +G; }
+dmsgw () { watch sh -c 'dmesg | tail'; }
 
 
 alias sletame='ssh 31.220.48.33 -p 2212'
