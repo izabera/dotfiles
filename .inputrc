@@ -1,6 +1,7 @@
 set completion-ignore-case on
 set bell-style none
 set colored-stats on
+set show-all-if-ambiguous on
 
 Tab: menu-complete
 # backtab
