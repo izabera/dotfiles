@@ -1,13 +1,21 @@
 set completion-ignore-case on
 set bell-style none
 set colored-stats on
-set show-all-if-ambiguous on
+set match-hidden-files off
 
+
+
+################
+# completion
+################
+# zsh-like(?) completion
 Tab: menu-complete
 # backtab
-"\C-[[Z":menu-complete-backward
+"\C-[[Z": menu-complete-backward
+# shows all if there's more than one
+set show-all-if-ambiguous on
+#"\C-A": possible-completions
 
-"\C-A":possible-completions
-# M-a
-"\ea":complete
+# M-a shows default-style completions
+"\ea": complete
 

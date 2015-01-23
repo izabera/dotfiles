@@ -82,7 +82,7 @@ end
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
 tags = {
-    names = { "dwb", "irc", 3, 4, 5, 6, 7, 8, 9 },
+    names = { "dwb", "irc", "im", 4, 5, 6, 7, 8, 9 },
     layout = { layouts[1], layouts[1], layouts[1], layouts[1], layouts[1], layouts[1], layouts[1], layouts[1], layouts[1] }
 }
 for s = 1, screen.count() do
@@ -103,8 +103,8 @@ myawesomemenu = {
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "dwb", "dwb", "/usr/share/pixmaps/dwb.png" },
-                                    { "weechat", terminal .. " -title 'WeeChat 1.0.1' -e weechat", "/usr/share/icons/hicolor/32x32/apps/weechat.png" }
---                                    { "open terminal", terminal }
+                                    { "weechat", terminal .. " -title 'WeeChat 1.0.1' -e weechat", "/usr/share/icons/hicolor/32x32/apps/weechat.png" },
+                                    { "skype", "skype", "/usr/share/pixmaps/skype.png" }
                                   }
                         })
 
@@ -383,6 +383,8 @@ awful.rules.rules = {
     { rule = { name = "WeeChat 1.0.1" },
       properties = { tag = tags[1][2] ,
                      fullscreen = true } },
+    { rule = { class = "Skype" },
+      properties = { tag = tags[1][3] } },
 }
 -- }}}
 
