@@ -103,8 +103,10 @@ myawesomemenu = {
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "dwb", "dwb", "/usr/share/pixmaps/dwb.png" },
+                                    { "qutebrowser", "qutebrowser", "/usr/share/icons/hicolor/32x32/apps/qutebrowser.png" },
                                     { "weechat", terminal .. " -title 'WeeChat 1.0.1' -e weechat", "/usr/share/icons/hicolor/32x32/apps/weechat.png" },
-                                    { "skype", "skype", "/usr/share/pixmaps/skype.png" }
+                                    { "skype", "skype", "/usr/share/pixmaps/skype.png" },
+                                    { "deluge", "deluge", "/usr/share/pixmaps/deluge.png" }
                                   }
                         })
 

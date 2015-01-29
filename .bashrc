@@ -60,23 +60,7 @@ dmsgw () { watch sh -c 'dmesg | tail'; }
 alias sletame='ssh 31.220.48.33 -p 2212'
 alias saringa='ssh arin.ga'
 
-# pacman wrapper that will ask for a password only when it's needed
-pacman () (
-  # juggling fd 1 and 2 to pass only stderr to the while loop
-  exec 3>&2 2>&1 1>&3 3>&-
-  if command pacman "$@" 3>&2 2>&1 1>&3 3>&- | {
-    needroot=false
-    while read -r -e || { printf %s "$REPLY"; false; } ; do
-      if [[ $REPLY = 'error: you cannot perform this operation unless you are root.' ]]; then
-        needroot=true
-        break
-      else
-        printf '%s\n' "$REPLY"
-      fi
-    done
-    "$needroot"
-  } ; then sudo pacman "$@" 3>&2 2>&1 1>&3 3>&- ; else exit $PIPESTATUS ; fi
-)
-
-w101 () { wine "$HOME/.wine/drive_c/users/Public/Application Data/Wizard101(IT)/Wizard101.exe"; }
+w101 () (
+  wine "$HOME/.wine/drive_c/users/Public/Application Data/Wizard101(IT)/Wizard101.exe" &
+) &> /dev/null
 

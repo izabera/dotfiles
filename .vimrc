@@ -59,6 +59,9 @@ syntax on
 set foldmethod=indent
 
 
+" disable stupid autoindent when pasting
+set pastetoggle=<F5>
+
 
 " " " " " " " " " " " " " " " " " " " " " " " " " " "
 " Theme

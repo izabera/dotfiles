@@ -1,6 +1,6 @@
 #!/bin/sh
 # shebang to enable nerd commenter
-setxkbmap it
+setxkbmap it -option compose:menu
 xrdb -merge /home/izabera/.Xresources
 urxvtd -q -f -o
 cbatticon &
