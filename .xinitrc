@@ -1,14 +1,15 @@
 #!/bin/sh
-# shebang to enable nerd commenter
 setxkbmap it -option compose:menu
-xrdb -merge /home/izabera/.Xresources
+xrdb -merge ~/.Xresources
 urxvtd -q -f -o
 cbatticon &
 volumeicon &
 clipit &
-exec awesome
+#exec awesome
 
 #exec i3
 
-#sxhkd &
-#exec bspwm
+#bar &
+sxhkd -c "$HOME"/.config/bspwm/sxhkdrc &
+xsetroot -bg "#181818" -bitmap "/usr/include/X11/bitmaps/xsnow" -cursor_name left_ptr
+exec bspwm
