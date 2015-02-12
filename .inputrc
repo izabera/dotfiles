@@ -16,6 +16,12 @@ Tab: menu-complete
 set show-all-if-ambiguous on
 #"\C-A": possible-completions
 
+# COOOOOOOL
+set menu-complete-display-prefix on
+
+
+set print-completions-horizontally on
+
 # M-a shows default-style completions
 "\ea": complete
 

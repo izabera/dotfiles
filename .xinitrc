@@ -11,5 +11,6 @@ clipit &
 
 #bar &
 sxhkd -c "$HOME"/.config/bspwm/sxhkdrc &
-xsetroot -bg "#181818" -bitmap "/usr/include/X11/bitmaps/xsnow" -cursor_name left_ptr
+xsetroot -cursor_name left_ptr
+feh --bg-scale ~/.config/backgrounds/woman-face.png
 exec bspwm
