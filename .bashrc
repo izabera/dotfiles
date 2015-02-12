@@ -29,10 +29,9 @@ _plan9 () {
     local comp=(/usr/lib/plan9/bin/"${COMP_WORDS[COMP_CWORD]}"*)
     COMPREPLY=("${comp[@]##*/}")
   else
-    while read -r -d ''; do
-      COMPREPLY+=("$REPLY")
-    done < <(libash_compgen -fz "${COMP_WORDS[COMP_CWORD]}")
-    compopt -o plusdirs
+    compopt -o bashdefault
+    compopt -o default
+    compopt -o filenames
   fi
 }
 complete -F _plan9 plan9
@@ -48,10 +47,12 @@ _posix () {
     local comp=(/usr/lib/posix/bin/"${COMP_WORDS[COMP_CWORD]}"*)
     COMPREPLY=("${comp[@]##*/}")
   else
-    while read -r -d ''; do
-      COMPREPLY+=("$REPLY")
-    done < <(libash_compgen -fz "${COMP_WORDS[COMP_CWORD]}")
-    compopt -o plusdirs
+    #while read -r -d ''; do
+      #COMPREPLY+=("$REPLY")
+    #done < <(libash_compgen -fz "${COMP_WORDS[COMP_CWORD]}")
+    compopt -o bashdefault
+    compopt -o default
+    compopt -o filenames
   fi
 }
 complete -F _posix posix
@@ -67,10 +68,9 @@ _heirloom () {
     local comp=(/usr/heirloom/bin/"${COMP_WORDS[COMP_CWORD]}"*)
     COMPREPLY=("${comp[@]##*/}")
   else
-    while read -r -d ''; do
-      COMPREPLY+=("$REPLY")
-    done < <(libash_compgen -fz "${COMP_WORDS[COMP_CWORD]}")
-    compopt -o plusdirs
+    compopt -o bashdefault
+    compopt -o default
+    compopt -o filenames
   fi
 }
 complete -F _heiloom heiloom
@@ -86,10 +86,9 @@ _suckless () {
     local comp=(/usr/suckless/bin/"${COMP_WORDS[COMP_CWORD]}"*)
     COMPREPLY=("${comp[@]##*/}")
   else
-    while read -r -d ''; do
-      COMPREPLY+=("$REPLY")
-    done < <(libash_compgen -fz "${COMP_WORDS[COMP_CWORD]}")
-    compopt -o plusdirs
+    compopt -o bashdefault
+    compopt -o default
+    compopt -o filenames
   fi
 }
 complete -F _suckless suckless
