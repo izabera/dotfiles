@@ -25,3 +25,7 @@ set print-completions-horizontally on
 # M-a shows default-style completions
 "\ea": complete
 
+
+
+"\e\e[A":history-search-backward
+"\e\e[B":history-search-forward

@@ -26,7 +26,7 @@ plan9 () {
 }
 _plan9 () {
   if (( ${#COMP_WORDS[@]} < 3 )); then
-    local comp=(/usr/lib/plan9/bin/"${COMP_WORDS[COMP_CWORD]}"*)
+    comp=(/usr/lib/plan9/bin/"${COMP_WORDS[COMP_CWORD]}"*)
     COMPREPLY=("${comp[@]##*/}")
   else
     compopt -o bashdefault
@@ -44,12 +44,9 @@ posix () {
 }
 _posix () {
   if (( ${#COMP_WORDS[@]} < 3 )); then
-    local comp=(/usr/lib/posix/bin/"${COMP_WORDS[COMP_CWORD]}"*)
+    comp=(/usr/lib/posix/bin/"${COMP_WORDS[COMP_CWORD]}"*)
     COMPREPLY=("${comp[@]##*/}")
   else
-    #while read -r -d ''; do
-      #COMPREPLY+=("$REPLY")
-    #done < <(libash_compgen -fz "${COMP_WORDS[COMP_CWORD]}")
     compopt -o bashdefault
     compopt -o default
     compopt -o filenames
@@ -65,7 +62,7 @@ heirloom () {
 }
 _heirloom () {
   if (( ${#COMP_WORDS[@]} < 3 )); then
-    local comp=(/usr/heirloom/bin/"${COMP_WORDS[COMP_CWORD]}"*)
+    comp=(/usr/heirloom/bin/"${COMP_WORDS[COMP_CWORD]}"*)
     COMPREPLY=("${comp[@]##*/}")
   else
     compopt -o bashdefault
@@ -73,7 +70,7 @@ _heirloom () {
     compopt -o filenames
   fi
 }
-complete -F _heiloom heiloom
+complete -F _heirloom heirloom
 
 suckless () {
   ((!$#)) && return 1
@@ -83,7 +80,7 @@ suckless () {
 }
 _suckless () {
   if (( ${#COMP_WORDS[@]} < 3 )); then
-    local comp=(/usr/suckless/bin/"${COMP_WORDS[COMP_CWORD]}"*)
+    comp=(/usr/suckless/bin/"${COMP_WORDS[COMP_CWORD]}"*)
     COMPREPLY=("${comp[@]##*/}")
   else
     compopt -o bashdefault
@@ -110,7 +107,13 @@ dmsgw () { watch sh -c 'dmesg | tail'; }
 alias sletame='ssh 31.220.48.33 -p 2212'
 alias saringa='ssh arin.ga'
 
-w101 () (
-  wine "$HOME/.wine/drive_c/users/Public/Application Data/Wizard101(IT)/Wizard101.exe" &
-) &> /dev/null
+_shelltest () {
+  bashes=(bash2.05 bash3.0 bash3.1 bash3.2 bash4.0 bash4.1 bash4.2 bash4.3)
+  bourneish=("${bashes[@]}" bsh bush dash jsh ksh mksh pdksh posh zsh)
+  posix=("${bashes[@]}" bush dash ksh mksh pdksh posh zsh)
+  allsh=("${bashes[@]}" bsh bush csh dash fish jsh ksh mksh osh pdksh posh sh6 tcsh zsh)
+  COMPREPLY=("${bashes[*]}" "${bourneish[*]}" "${posix[*]}" "${allsh[*]}")
+}
+complete -F _shelltest shelltest
 
+export IGNOREEOF=1

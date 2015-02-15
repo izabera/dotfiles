@@ -2,9 +2,9 @@
 setxkbmap it -option compose:menu
 xrdb -merge ~/.Xresources
 urxvtd -q -f -o
-cbatticon &
-volumeicon &
 clipit &
+#cbatticon &
+#volumeicon &
 #exec awesome
 
 #exec i3
