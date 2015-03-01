@@ -40,7 +40,9 @@ inoremap <C-a> <Esc>ggVG
 " nnoremap <C-a> ggVG         " C-a == increment number
 "
 " insert new line in normal mode: <CR>
-nnoremap <CR> o<Esc>
+if !exists("vimpager") 
+  nnoremap <CR> o<Esc>
+endif
 
 " save 'with sudo' by using :w!!
 cmap w!! w !sudo tee > /dev/null %

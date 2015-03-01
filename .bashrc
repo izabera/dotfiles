@@ -116,3 +116,5 @@ _shelltest () {
 complete -F _shelltest shelltest
 
 export IGNOREEOF=1
+export PAGER=vimpager
+export GIT_PAGER=less
