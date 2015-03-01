@@ -102,16 +102,15 @@ export ALARMTIME=07:05
 export EDITOR=vim
 
 dmsgl () { dmesg --color=always | less -R +G; }
-dmsgw () { watch sh -c 'dmesg | tail'; }
 
 alias sletame='ssh 31.220.48.33 -p 2212'
 alias saringa='ssh arin.ga'
 
 _shelltest () {
   bashes=(bash2.05 bash3.0 bash3.1 bash3.2 bash4.0 bash4.1 bash4.2 bash4.3)
-  bourneish=("${bashes[@]}" bsh bush dash jsh ksh mksh pdksh posh zsh)
-  posix=("${bashes[@]}" bush dash ksh mksh pdksh posh zsh)
-  allsh=("${bashes[@]}" bsh bush csh dash fish jsh ksh mksh osh pdksh posh sh6 tcsh zsh)
+  bourneish=("${bashes[@]}" bsh bush dash jsh ksh mksh pdksh posh yash zsh)
+  posix=("${bashes[@]}" bush dash ksh mksh pdksh posh yash zsh)
+  allsh=("${bashes[@]}" bsh bush csh dash fish jsh ksh mksh osh pdksh posh sh6 tcsh yash zsh)
   COMPREPLY=("${bashes[*]}" "${bourneish[*]}" "${posix[*]}" "${allsh[*]}")
 }
 complete -F _shelltest shelltest

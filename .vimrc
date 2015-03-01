@@ -131,8 +131,11 @@ nnoremap <S-Tab> :w<CR>:bprevious<CR>
 " decrease width: C-Right
 " increase height: C-Up
 " decrease height: C-Down
-"map <C-Left> <Esc><C-w><
-"map <C-Right> <Esc><C-w>>
-"map <C-Up> <Esc><C-w>+
-"map <C-Down> <Esc><C-w>-
+map <Left> <C-w><
+map <Right> <C-w>>
+map <Up> <C-w>+
+map <Down> <C-w>-
 
+" center after searches
+nnoremap n nzz
+nnoremap N Nzz

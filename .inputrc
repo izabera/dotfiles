@@ -26,6 +26,5 @@ set print-completions-horizontally on
 "\ea": complete
 
 
-
 "\e\e[A":history-search-backward
 "\e\e[B":history-search-forward

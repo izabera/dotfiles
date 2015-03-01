@@ -10,8 +10,13 @@ bspc config focus_by_distance     true
 bspc config focus_follows_pointer true
 
 bspc monitor -d dwb irc 3 4 5 6 7 8 9 0
+bspc desktop irc -l monocle
+bspc desktop dwb -l monocle
+bspc desktop 7 --toggle floating=on
+
 
 bspc rule -a Gimp desktop=^8 follow=on floating=on
+bspc rule -a Wizard101 desktop=^7 follow=on floating=on
 bspc rule -a Chromium desktop=^4
 bspc rule -a Firefox desktop=^4
 bspc rule -a Dwb desktop=^1 fullscreen=on
@@ -21,4 +26,4 @@ bspc rule -a Weechat desktop=^2 follow=on fullscreen=on
 bspc config -m focused top_padding 15
 
 . ~/font
-exec mybar
+mybar
