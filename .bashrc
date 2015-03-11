@@ -117,4 +117,5 @@ complete -F _shelltest shelltest
 
 export IGNOREEOF=1
 export PAGER=vimpager
+export MANPAGER=less
 export GIT_PAGER=less

@@ -35,7 +35,7 @@ vnoremap <C-c> "*y
 " " " " " " " " " " " " " " " " " " " " " " " " " " "
 
 " select all: C-a
-vnoremap <C-a> <Esc>ggVG
+"vnoremap <C-a> <Esc>ggVG
 inoremap <C-a> <Esc>ggVG
 " nnoremap <C-a> ggVG         " C-a == increment number
 "
