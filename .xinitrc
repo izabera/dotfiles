@@ -14,3 +14,4 @@ sxhkd -c "$HOME"/.config/bspwm/sxhkdrc &
 xsetroot -cursor_name left_ptr
 feh --bg-scale ~/.config/backgrounds/woman-face.png
 exec bspwm
+#exec rio

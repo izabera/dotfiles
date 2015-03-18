@@ -119,3 +119,6 @@ export IGNOREEOF=1
 export PAGER=vimpager
 export MANPAGER=less
 export GIT_PAGER=less
+
+alias pstree='pstree -A'
+alias leave='uprm;:q'
