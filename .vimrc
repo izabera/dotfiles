@@ -141,3 +141,13 @@ map <Down> <C-w>-
 " center after searches
 nnoremap n nzz
 nnoremap N Nzz
+
+" to edit chet's code
+function Gnustyle ()
+  set ts=8 sw=8 noexpandtab softtabstop=8 smarttab!
+endfunction
+
+" coooooooooool
+set wildmenu
+set wildmode=list:longest,full
+set wildignorecase

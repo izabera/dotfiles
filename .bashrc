@@ -110,10 +110,20 @@ _shelltest () {
   bashes=(bash2.05 bash3.0 bash3.1 bash3.2 bash4.0 bash4.1 bash4.2 bash4.3)
   bourneish=("${bashes[@]}" bsh bush dash jsh ksh mksh pdksh posh yash zsh)
   posix=("${bashes[@]}" bush dash ksh mksh pdksh posh yash zsh)
-  allsh=("${bashes[@]}" bsh bush csh dash fish jsh ksh mksh osh pdksh posh sh6 tcsh yash zsh)
+  allsh=("${bashes[@]}" bsh bush csh dash fish jsh ksh mksh osh pdksh posh sh6 rc tcsh yash zsh)
   COMPREPLY=("${bashes[*]}" "${bourneish[*]}" "${posix[*]}" "${allsh[*]}")
 }
 complete -F _shelltest shelltest
+
+_rrlwrap () {
+  if (( COMP_CWORD == 1 )); then
+    mapfile -t COMPREPLY < <(compgen -c -- "${COMP_WORDS[COMP_CWORD]}")
+  else
+    compopt -o bashdefault
+    compopt -o default
+  fi
+}
+complete -F _rrlwrap rrlwrap
 
 export IGNOREEOF=1
 export PAGER=vimpager
@@ -122,3 +132,4 @@ export GIT_PAGER=less
 
 alias pstree='pstree -A'
 alias leave='uprm;:q'
+alias ed='rrlwrap ed'
