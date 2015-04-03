@@ -28,3 +28,9 @@ set print-completions-horizontally on
 
 "\e\e[A":history-search-backward
 "\e\e[B":history-search-forward
+
+# C-w is usually bound to werase in stty
+set bind-tty-special-chars off
+
+# instead of unix-word-rubout which doesn't stop at /
+"\C-w": backward-kill-word
