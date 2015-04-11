@@ -133,3 +133,4 @@ export GIT_PAGER=less
 alias pstree='pstree -A'
 alias leave='uprm;:q'
 alias ed='rrlwrap ed'
+alias dc='rrlwrap dc'
