@@ -147,6 +147,16 @@ function Gnustyle ()
   set ts=8 sw=8 noexpandtab softtabstop=8 smarttab!
 endfunction
 
+function Bash ()
+  set ft=sh
+  execute "normal ggi#!/bin/bash\<cr>"
+  let g:is_bash=1
+endfunction
+nnoremap <F8> :call Bash()<cr>
+
+" use _ as a word boundary
+set iskeyword-=_
+
 " coooooooooool
 set wildmenu
 set wildmode=list:longest,full
