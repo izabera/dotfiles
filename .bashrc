@@ -5,7 +5,7 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-shopt -s checkwinsize
+#shopt -s checkwinsize
 shopt -u sourcepath
 
 set -o vi
@@ -103,10 +103,10 @@ export EDITOR=vim
 
 dmsgl () { dmesg --color=always | less -R +G; }
 
-alias sletame='ssh 31.220.48.33 -p 2212'
 alias saringa='ssh arin.ga'
 
 _shelltest () {
+  local bashes bourneish posix allsh IFS=$' \t\n'
   bashes=(bash2.05 bash3.0 bash3.1 bash3.2 bash4.0 bash4.1 bash4.2 bash4.3)
   bourneish=("${bashes[@]}" bsh bush dash jsh ksh mksh pdksh posh yash zsh)
   posix=("${bashes[@]}" bush dash ksh mksh pdksh posh yash zsh)
@@ -124,6 +124,12 @@ _rrlwrap () {
   fi
 }
 complete -F _rrlwrap rrlwrap
+
+# cabal-install messes with polipo
+cabal () (
+  unset http_proxy
+  command cabal "$@"
+)
 
 export IGNOREEOF=1
 export PAGER=vimpager

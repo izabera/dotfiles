@@ -3,6 +3,10 @@ set bell-style none
 set colored-stats on
 set match-hidden-files off
 
+# for programs that use readline but can't set it
+set editing-mode vi
+# M-C-j from emacs mode changes to vi
+# C-e from vi to emacs  (this doesn't seem to work?)
 
 
 ################
@@ -10,6 +14,12 @@ set match-hidden-files off
 ################
 # zsh-like(?) completion
 Tab: menu-complete
+
+# tab completion in bc completes filenames for no reason
+$if bc
+  Tab:
+$endif
+
 # backtab
 "\C-[[Z": menu-complete-backward
 # shows all if there's more than one
@@ -26,7 +36,9 @@ set print-completions-horizontally on
 "\ea": complete
 
 
+# alt + up
 "\e\e[A":history-search-backward
+# alt + down
 "\e\e[B":history-search-forward
 
 # C-w is usually bound to werase in stty
