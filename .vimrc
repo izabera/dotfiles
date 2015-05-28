@@ -147,6 +147,9 @@ function Gnustyle ()
   set ts=8 sw=8 noexpandtab softtabstop=8 smarttab!
 endfunction
 
+au BufNewFile,BufRead $HOME/bashes/bash/* call Gnustyle()
+au BufNewFile,BufRead $HOME/bashes/bash/*.def set ft=c
+
 function Bash ()
   set ft=sh
   execute "normal ggi#!/bin/bash\<cr>"
@@ -155,9 +158,12 @@ endfunction
 nnoremap <F8> :call Bash()<cr>
 
 " use _ as a word boundary
-set iskeyword-=_
+"set iskeyword-=_
 
 " coooooooooool
 set wildmenu
 set wildmode=list:longest,full
 set wildignorecase
+
+" search upwards for a tag file
+set tags=./tags;,tags

@@ -1,6 +1,7 @@
 #
 # ~/.bashrc
 #
+alias chmox='chmod +x'
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
@@ -91,7 +92,7 @@ _suckless () {
 complete -F _suckless suckless
 
 snippet () {
-  [[ $1 ]] && curl "$1" | vim ${2++'set ft='"$2"} \
+  [[ $1 ]] && curl -s "$1" | vim ${2++'set ft='"$2"} \
     +'set ts=2 sts=2 sw=2 sta et' +'normal gg=G' +'set nomodified' - 
 }
 
@@ -140,3 +141,4 @@ alias pstree='pstree -A'
 alias leave='uprm;:q'
 alias ed='rrlwrap ed'
 alias dc='rrlwrap dc'
+alias wifi-menu='sudo wifi-menu'

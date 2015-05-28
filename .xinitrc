@@ -10,8 +10,10 @@ clipit &
 #exec i3
 
 #bar &
+xset +fp /usr/share/fonts/local
+xset fp rehash
 sxhkd -c "$HOME"/.config/bspwm/sxhkdrc &
 xsetroot -cursor_name left_ptr
-feh --bg-scale ~/.config/backgrounds/woman-face.png
+feh --bg-fill ~/.config/backgrounds/autumn.png
 exec bspwm
 #exec rio

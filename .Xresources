@@ -105,7 +105,7 @@ URxvt*colorUL:                        yellow
 ! URxvt*iconFile:                       file
 !URxvt*font:                           xft:monospace:size=8
 !URxvt*font:                           xft:terminus:size=8
-!urxvt*font:                           -*-terminus--r-*-*-12-*-*-*-*-*-*-*
+!urxvt*font:                           -*-terminus-*-r-*-*-12-*-*-*-*-*-*-*
 urxvt*font:  *-tamsyn-medium-r-normal--12-*
 ! URxvt*boldFont:                       fontname
 ! URxvt*italicFont:                     fontname
