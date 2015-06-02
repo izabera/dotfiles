@@ -167,3 +167,6 @@ set wildignorecase
 
 " search upwards for a tag file
 set tags=./tags;,tags
+
+" .swp files
+set directory=~/.vim/swap
