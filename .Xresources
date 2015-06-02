@@ -177,3 +177,4 @@ URxvt*secondaryScroll:                0
 !xterm*faceName:                         monospace
 xterm*faceName:                         xft:monospace:size=8
 xterm*font:                             8
+xterm*termName:  xterm-256color

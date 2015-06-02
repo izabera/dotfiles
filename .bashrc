@@ -157,4 +157,4 @@ alias ed='rrlwrap ed'
 alias dc='rrlwrap dc'
 alias wifi-menu='sudo wifi-menu'
 
-vimfind() { find / -type f -name "${1-*}.sw[?]"; }
+vimfind() { find / -type f -name ".*${1-*}*.sw?"; }
