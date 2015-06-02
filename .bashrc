@@ -17,7 +17,21 @@ set +H
 export LIBASHDIR="$HOME/sv/libash"
 source "$LIBASHDIR/libash"
 
-export PATH="/usr/local/texlive/2014/bin/x86_64-linux:$PATH:$HOME/bin:$HOME/.cabal/bin:/usr/heirloom/bin"
+path=(
+  /usr/local/texlive/2014/bin/x86_64-linux
+  /usr/local/sbin
+  /usr/local/bin
+  /usr/bin
+  /usr/bin/site_perl
+  /usr/bin/vendor_perl
+  /usr/bin/core_perl
+  "$HOME"/bin
+  "$HOME"/.cabal/bin
+  /usr/lib/plan9/bin
+  /usr/heirloom/bin
+  /usr/suckless/bin
+)
+IFS=: eval 'export PATH="${path[*]}"'
 
 plan9 () {
   ((!$#)) && return 1
@@ -142,3 +156,5 @@ alias leave='uprm;:q'
 alias ed='rrlwrap ed'
 alias dc='rrlwrap dc'
 alias wifi-menu='sudo wifi-menu'
+
+vimfind() { find / -type f -name "${1-*}.sw[?]"; }
