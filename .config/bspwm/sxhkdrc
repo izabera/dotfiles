@@ -97,7 +97,8 @@ super + Return
 	urxvtc
 
 super + space
-	dmenu_run
+  dmenu_run -fn *-tamsyn-medium-r-normal--12-* -i -nb \#4d4d4d -nf \#A3A6AB -sb \#5C5955 #-sf \#E23D80
+# looks ugly with -sf
 
 # make sxhkd reload its configuration files:
 super + Escape
