@@ -58,7 +58,9 @@ nnoremap Y y$
 
 filetype plugin indent on
 syntax on
-set foldmethod=indent
+set foldmethod=manual
+autocmd BufWinLeave ?* mkview
+autocmd BufWinEnter ?* silent loadview
 
 
 " disable stupid autoindent when pasting

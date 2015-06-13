@@ -156,3 +156,7 @@ alias leave='uprm;:q'
 alias ed='rrlwrap ed'
 alias dc='rrlwrap dc'
 alias wifi-menu='sudo wifi-menu'
+youtube-dl () (
+  cd ~/video
+  command youtube-dl "$@"
+)

@@ -77,16 +77,16 @@ super + @button{1-3}
 	bspc pointer -u
 
 super + {_,shift + }Left
-    bspc window --presel {left; dmenu_run,left; urxvtc}
+    bspc window --presel {left; dmenu_non_ugly,left; urxvtc}
 
 super + {_,shift + }Right
-    bspc window --presel {right; dmenu_run,right; urxvtc}
+    bspc window --presel {right; dmenu_non_ugly,right; urxvtc}
 
 super + {_,shift + }Up
-    bspc window --presel {up; dmenu_run,up; urxvtc}
+    bspc window --presel {up; dmenu_non_ugly,up; urxvtc}
 
 super + {_,shift + }Down
-    bspc window --presel {down; dmenu_run,down; urxvtc}
+    bspc window --presel {down; dmenu_non_ugly,down; urxvtc}
 
 
 #
@@ -97,7 +97,8 @@ super + Return
 	urxvtc
 
 super + space
-  dmenu_run -fn *-tamsyn-medium-r-normal--12-* -i -nb \#4d4d4d -nf \#A3A6AB -sb \#5C5955 #-sf \#E23D80
+  dmenu_non_ugly
+# dmenu_run -fn *-tamsyn-medium-r-normal--12-* -i -nb \#4d4d4d -nf \#A3A6AB -sb \#5C5955 #-sf \#E23D80
 # looks ugly with -sf
 
 # make sxhkd reload its configuration files:

@@ -1,7 +1,7 @@
 HISTSIZE=1000000
 SAVEHIST=1000000
 
-source $HOME/.profile
+#source $HOME/.profile
 
 setopt appendhistory autocd beep extendedglob nomatch notify prompt_subst
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'  
@@ -22,19 +22,19 @@ bindkey -M vicmd v edit-command-line
 
 setopt prompt_subst transientrprompt
  
-add-zsh-hook chpwd __git_enter
+#add-zsh-hook chpwd __git_enter
 
-BLUE=$'%{\e[1;34m%}'
-RED=$'%{\e[1;31m%}'
-GREEN=$'%{\e[1;32m%}'
-CYAN=$'%{\e[1;36m%}'
-WHITE=$'%{\e[1;37m%}'
-MAGENTA=$'%{\e[1;35m%}'
-YELLOW=$'%{\e[1;33m%}'
-NO_COLOR=$'%{\e[0m%}'
+#BLUE=$'%{\e[1;34m%}'
+#RED=$'%{\e[1;31m%}'
+#GREEN=$'%{\e[1;32m%}'
+#CYAN=$'%{\e[1;36m%}'
+#WHITE=$'%{\e[1;37m%}'
+#MAGENTA=$'%{\e[1;35m%}'
+#YELLOW=$'%{\e[1;33m%}'
+#NO_COLOR=$'%{\e[0m%}'
 
-PROMPT='${GREEN}%n${NO_COLOR}@${CYAN}%m ${RED}%~${NO_COLOR} $(__return_status)%#${NO_COLOR} '
-RPROMPT='$(__git_prompt)$(__battery)'
+#PROMPT='${GREEN}%n${NO_COLOR}@${CYAN}%m ${RED}%~${NO_COLOR} $(__return_status)%#${NO_COLOR} '
+#RPROMPT='$(__git_prompt)$(__battery)'
 
 fancy-ctrl-z () {
   if [[ $#BUFFER -eq 0 ]]; then
