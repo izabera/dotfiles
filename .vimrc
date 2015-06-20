@@ -172,3 +172,6 @@ set tags=./tags;,tags
 
 " .swp files
 set directory=~/.vim/swap
+
+
+nnoremap <F6> :make<CR>
