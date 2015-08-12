@@ -18,7 +18,7 @@ export LIBASHDIR="$HOME/sv/libash"
 source "$LIBASHDIR/libash"
 
 path=(
-  /usr/local/texlive/2014/bin/x86_64-linux
+  /usr/local/texlive/2015/bin/x86_64-linux
   /usr/local/sbin
   /usr/local/bin
   /usr/bin
@@ -30,6 +30,7 @@ path=(
   /usr/lib/plan9/bin
   /usr/heirloom/bin
   /usr/suckless/bin
+  "$HOME"/.gem/ruby/2.2.0/bin
 )
 IFS=: eval 'export PATH="${path[*]}"'
 
@@ -156,7 +157,27 @@ alias leave='uprm;:q'
 alias ed='rrlwrap ed'
 alias dc='rrlwrap dc'
 alias wifi-menu='sudo wifi-menu'
-youtube-dl () (
-  cd ~/video
-  command youtube-dl "$@"
-)
+_youtube-dl () {
+  history 1 | {
+    read -ra array
+    cd ~/video
+    command youtube-dl "${array[@]:2}"
+  }
+}
+alias youtube-dl="_youtube-dl #"
+HISTSIZE=-1
+HISTFILESIZE=-1
+calc () { gawk -OM "BEGIN { print $* }"; }
+alias calc='noglob calc'
+alias dash='rlwrap -ic dash'
+alias posh='rlwrap -ic posh'
+alias odc='od -An -c'
+alias odxc='od -An -tx1c'
+alias oddc='od -An -td1c'
+shellcheck () {
+  if (( $# )); then
+    shellcheck "$@"
+  else
+    rlwrap --history-filename=/dev/null shellcheck -s bash -
+  fi
+}

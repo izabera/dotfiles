@@ -93,6 +93,9 @@ super + {_,shift + }Down
 # wm independent hotkeys
 #
 
+super + shift + Return
+	vimscratchpad
+
 super + Return
 	urxvtc
 

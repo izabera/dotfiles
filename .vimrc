@@ -175,3 +175,5 @@ set directory=~/.vim/swap
 
 
 nnoremap <F6> :make<CR>
+
+set listchars=nbsp:¬,eol:$,tab:>-,extends:»,precedes:«,trail:•

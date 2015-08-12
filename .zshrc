@@ -10,6 +10,7 @@ zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
 bindkey -v
 zstyle :compinstall filename "$HOME/.zshrc"
 bindkey "^[[3~" delete-char
+bindkey '^?' backward-delete-char
 
 setopt NO_BEEP
 

@@ -46,3 +46,6 @@ set bind-tty-special-chars off
 
 # instead of unix-word-rubout which doesn't stop at /
 "\C-w": backward-kill-word
+
+# hate this
+set revert-all-at-newline on
