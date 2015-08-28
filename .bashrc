@@ -19,27 +19,22 @@ source "$LIBASHDIR/libash"
 
 path=(
   /usr/local/texlive/2015/bin/x86_64-linux
-  /usr/local/sbin
+  #/usr/local/sbin
   /usr/local/bin
   /usr/bin
-  /usr/bin/site_perl
-  /usr/bin/vendor_perl
+  #/usr/bin/site_perl
+  #/usr/bin/vendor_perl
   /usr/bin/core_perl
   "$HOME"/bin
   "$HOME"/.cabal/bin
   /usr/lib/plan9/bin
-  /usr/heirloom/bin
+  #/usr/heirloom/bin
   /usr/suckless/bin
   "$HOME"/.gem/ruby/2.2.0/bin
 )
 IFS=: eval 'export PATH="${path[*]}"'
 
-plan9 () {
-  ((!$#)) && return 1
-  local prog=$1
-  shift
-  "/usr/lib/plan9/bin/$prog" "$@"
-}
+plan9 () { (($#)) && ( exec -a "$1" "/usr/lib/plan9/bin/$@" ); }
 _plan9 () {
   if (( ${#COMP_WORDS[@]} < 3 )); then
     comp=(/usr/lib/plan9/bin/"${COMP_WORDS[COMP_CWORD]}"*)
@@ -52,48 +47,43 @@ _plan9 () {
 }
 complete -F _plan9 plan9
 
-posix () {
-  ((!$#)) && return 1
-  local prog=$1
-  shift
-  "/usr/lib/posix/bin/$prog" "$@"
-}
-_posix () {
-  if (( ${#COMP_WORDS[@]} < 3 )); then
-    comp=(/usr/lib/posix/bin/"${COMP_WORDS[COMP_CWORD]}"*)
-    COMPREPLY=("${comp[@]##*/}")
-  else
-    compopt -o bashdefault
-    compopt -o default
-    compopt -o filenames
-  fi
-}
-complete -F _posix posix
+#posix () {
+  #((!$#)) && return 1
+  #local prog=$1
+  #shift
+  #"/usr/lib/posix/bin/$prog" "$@"
+#}
+#_posix () {
+  #if (( ${#COMP_WORDS[@]} < 3 )); then
+    #comp=(/usr/lib/posix/bin/"${COMP_WORDS[COMP_CWORD]}"*)
+    #COMPREPLY=("${comp[@]##*/}")
+  #else
+    #compopt -o bashdefault
+    #compopt -o default
+    #compopt -o filenames
+  #fi
+#}
+#complete -F _posix posix
 
-heirloom () {
-  ((!$#)) && return 1
-  local prog=$1
-  shift
-  "/usr/heirloom/bin/$prog" "$@"
-}
-_heirloom () {
-  if (( ${#COMP_WORDS[@]} < 3 )); then
-    comp=(/usr/heirloom/bin/"${COMP_WORDS[COMP_CWORD]}"*)
-    COMPREPLY=("${comp[@]##*/}")
-  else
-    compopt -o bashdefault
-    compopt -o default
-    compopt -o filenames
-  fi
-}
-complete -F _heirloom heirloom
+#heirloom () {
+  #((!$#)) && return 1
+  #local prog=$1
+  #shift
+  #"/usr/heirloom/bin/$prog" "$@"
+#}
+#_heirloom () {
+  #if (( ${#COMP_WORDS[@]} < 3 )); then
+    #comp=(/usr/heirloom/bin/"${COMP_WORDS[COMP_CWORD]}"*)
+    #COMPREPLY=("${comp[@]##*/}")
+  #else
+    #compopt -o bashdefault
+    #compopt -o default
+    #compopt -o filenames
+  #fi
+#}
+#complete -F _heirloom heirloom
 
-suckless () {
-  ((!$#)) && return 1
-  local prog=$1
-  shift
-  "/usr/suckless/bin/$prog" "$@"
-}
+suckless () { (($#)) && ( exec -a "$1" "/usr/suckless/bin/$@" ); }
 _suckless () {
   if (( ${#COMP_WORDS[@]} < 3 )); then
     comp=(/usr/suckless/bin/"${COMP_WORDS[COMP_CWORD]}"*)
@@ -119,7 +109,7 @@ export EDITOR=vim
 
 dmsgl () { dmesg --color=always | less -R +G; }
 
-alias saringa='ssh arin.ga'
+alias amazon='ssh arin.ga'
 
 _shelltest () {
   local bashes bourneish posix allsh IFS=$' \t\n'
@@ -148,14 +138,14 @@ cabal () (
 )
 
 export IGNOREEOF=1
-export PAGER=vimpager
-export MANPAGER=less
-export GIT_PAGER=less
+export PAGER=less
+#export MANPAGER=less
+#export GIT_PAGER=less
 
 alias pstree='pstree -A'
 alias leave='uprm;:q'
-alias ed='rrlwrap ed'
-alias dc='rrlwrap dc'
+alias ed='rlwrap ed'
+alias dc='rlwrap dc'
 alias wifi-menu='sudo wifi-menu'
 _youtube-dl () {
   history 1 | {
