@@ -171,3 +171,5 @@ shellcheck () {
     rlwrap --history-filename=/dev/null shellcheck -s bash -
   fi
 }
+_hostcolor=6
+alias rc='rlwrap rc'
