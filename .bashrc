@@ -166,10 +166,29 @@ alias odxc='od -An -tx1c'
 alias oddc='od -An -td1c'
 shellcheck () {
   if (( $# )); then
-    shellcheck "$@"
+    command shellcheck "$@"
   else
     rlwrap --history-filename=/dev/null shellcheck -s bash -
   fi
 }
 _hostcolor=6
 alias rc='rlwrap rc'
+h2b () { local IFS=' '; printf %d $[1&(16#$1)>>{31..0}]; echo; }
+d2b () { local IFS=' '; printf %d $[1&$1>>{31..0}]; echo; }
+b2h () { printf "0x%08x\n" "$(( 2#$1 ))"; }
+updateothers1 () {
+  innerloop () {
+    while [[ $(git pull 2>&1 | tee /dev/tty) = *"Could not resolve host"* ]]; do
+      sleep 1
+    done
+  }
+  for i in ~/others/!(cv)/ ~/bashes/bash; do
+    [[ -d $i/.git ]] && { eval "cd $(printf %q "$i") && innerloop &"; }
+  done
+}
+
+updateothers2 () {
+  for i in ~/others/!(cv)/ ~/bashes/bash; do
+    [[ -d $i/.git ]] && { eval "cd $(printf %q "$i") && git pull &"; }
+  done
+}
