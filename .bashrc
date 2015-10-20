@@ -14,9 +14,6 @@ set -o vi
 # never use this anyway
 set +H
 
-export LIBASHDIR="$HOME/sv/libash"
-source "$LIBASHDIR/libash"
-
 path=(
   /usr/local/texlive/2015/bin/x86_64-linux
   #/usr/local/sbin
@@ -28,11 +25,14 @@ path=(
   "$HOME"/bin
   "$HOME"/.cabal/bin
   /usr/lib/plan9/bin
-  #/usr/heirloom/bin
+  /usr/heirloom/bin
   /usr/suckless/bin
   "$HOME"/.gem/ruby/2.2.0/bin
 )
 IFS=: eval 'export PATH="${path[*]}"'
+
+export LIBASHDIR="$HOME/sv/libash"
+source "$LIBASHDIR/libash"
 
 plan9 () { (($#)) && ( exec -a "$1" "/usr/lib/plan9/bin/$@" ); }
 _plan9 () {
@@ -65,23 +65,18 @@ complete -F _plan9 plan9
 #}
 #complete -F _posix posix
 
-#heirloom () {
-  #((!$#)) && return 1
-  #local prog=$1
-  #shift
-  #"/usr/heirloom/bin/$prog" "$@"
-#}
-#_heirloom () {
-  #if (( ${#COMP_WORDS[@]} < 3 )); then
-    #comp=(/usr/heirloom/bin/"${COMP_WORDS[COMP_CWORD]}"*)
-    #COMPREPLY=("${comp[@]##*/}")
-  #else
-    #compopt -o bashdefault
-    #compopt -o default
-    #compopt -o filenames
-  #fi
-#}
-#complete -F _heirloom heirloom
+heirloom () { (($#)) && ( exec -a "$1" "/usr/heirloom/bin/$@" ); }
+_heirloom () {
+  if (( ${#COMP_WORDS[@]} < 3 )); then
+    comp=(/usr/heirloom/bin/"${COMP_WORDS[COMP_CWORD]}"*)
+    COMPREPLY=("${comp[@]##*/}")
+  else
+    compopt -o bashdefault
+    compopt -o default
+    compopt -o filenames
+  fi
+}
+complete -F _heirloom heirloom
 
 suckless () { (($#)) && ( exec -a "$1" "/usr/suckless/bin/$@" ); }
 _suckless () {
@@ -147,14 +142,14 @@ alias leave='uprm;:q'
 alias ed='rlwrap ed'
 alias dc='rlwrap dc'
 alias wifi-menu='sudo wifi-menu'
-_youtube-dl () {
+youtube-dl () {
   history 1 | {
     read -ra array
     cd ~/video
     command youtube-dl "${array[@]:2}"
   }
 }
-alias youtube-dl="_youtube-dl #"
+alias youtube-dl="youtube-dl #"
 HISTSIZE=-1
 HISTFILESIZE=-1
 calc () { gawk -OM "BEGIN { print $* }"; }
@@ -176,19 +171,28 @@ alias rc='rlwrap rc'
 h2b () { local IFS=' '; printf %d $[1&(16#$1)>>{31..0}]; echo; }
 d2b () { local IFS=' '; printf %d $[1&$1>>{31..0}]; echo; }
 b2h () { printf "0x%08x\n" "$(( 2#$1 ))"; }
-updateothers1 () {
-  innerloop () {
-    while [[ $(git pull 2>&1 | tee /dev/tty) = *"Could not resolve host"* ]]; do
-      sleep 1
-    done
-  }
-  for i in ~/others/!(cv)/ ~/bashes/bash; do
-    [[ -d $i/.git ]] && { eval "cd $(printf %q "$i") && innerloop &"; }
-  done
-}
-
-updateothers2 () {
-  for i in ~/others/!(cv)/ ~/bashes/bash; do
-    [[ -d $i/.git ]] && { eval "cd $(printf %q "$i") && git pull &"; }
-  done
-}
+sysupdate () (
+  local i count dirs=(~/others/!(cv)/ ~/bashes/bash)
+  for i in "${dirs[@]}"; do
+    if [[ -d $i/.git ]]; then
+      cd "$i" &&
+      while [[ $(git pull 2>&1) = *"Could not resolve host"* ]]; do
+        sleep 1
+      done
+    elif [[ -d $i/.hg ]]; then
+      cd "$i" &&
+      hg pull
+    elif [[ -d $i/.bzr ]]; then
+      cd "$i" &&
+      bzr pull
+    elif [[ -d $i/.svn ]]; then
+      cd "$i" &&
+      svn update
+    fi >/dev/null &
+    (( count ++ > 5 )) && wait -n
+    printf "\rrepos: %s/%s" "$count" "${#git[@]}"
+  done 2>/dev/null
+  echo
+  yaourt -Syua
+  tlmgr update --all
+)
