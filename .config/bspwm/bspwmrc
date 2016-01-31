@@ -18,7 +18,7 @@ bspc desktop 7 --toggle floating=on
 bspc rule -a Gimp desktop=^8 follow=on floating=on
 bspc rule -a Wizard101 desktop=^7 follow=on floating=on
 bspc rule -a Chromium desktop=^4
-bspc rule -a Firefox desktop=^4
+bspc rule -a Firefox desktop=^1
 bspc rule -a Dwb desktop=^1 fullscreen=on
 bspc rule -a mpv floating=on
 bspc rule -a vlc floating=on

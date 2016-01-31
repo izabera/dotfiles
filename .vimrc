@@ -36,7 +36,7 @@ vnoremap <C-c> "*y
 
 " select all: C-a
 "vnoremap <C-a> <Esc>ggVG
-inoremap <C-a> <Esc>ggVG
+"inoremap <C-a> <Esc>ggVG
 " nnoremap <C-a> ggVG         " C-a == increment number
 "
 " insert new line in normal mode: <CR>
@@ -146,10 +146,15 @@ nnoremap N Nzz
 
 " to edit chet's code
 function Gnustyle ()
-  set ts=8 sw=8 noexpandtab softtabstop=8 smarttab!
+  set ts=8 sw=2 noexpandtab softtabstop=8 nosmarttab
 endfunction
 
+" relatively sane
+function Eightspaces ()
+  set ts=8 sw=8 noexpandtab softtabstop=8 nosmarttab
+endfunction
 au BufNewFile,BufRead $HOME/bashes/bash/* call Gnustyle()
+au BufNewFile,BufRead $HOME/others/musl/* call Eightspaces()
 au BufNewFile,BufRead $HOME/bashes/bash/*.def set ft=c
 
 function Bash ()

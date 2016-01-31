@@ -13,25 +13,29 @@ set -o vi
 
 # never use this anyway
 set +H
+# but this looks handy
+alias '!!=fc -s'
 
 path=(
   /usr/local/texlive/2015/bin/x86_64-linux
   #/usr/local/sbin
+  "$HOME"/bin
+  "$HOME"/.cabal/bin
   /usr/local/bin
   /usr/bin
   #/usr/bin/site_perl
   #/usr/bin/vendor_perl
   /usr/bin/core_perl
-  "$HOME"/bin
-  "$HOME"/.cabal/bin
   /usr/lib/plan9/bin
   /usr/heirloom/bin
   /usr/suckless/bin
   "$HOME"/.gem/ruby/2.2.0/bin
+  "$HOME"/.gem/ruby/2.3.0/bin
 )
 IFS=: eval 'export PATH="${path[*]}"'
 
-export LIBASHDIR="$HOME/sv/libash"
+export LIBASHDIR=$HOME/sv/libash
+time_in_prompt=1 time_in_prompt_min=3 do_not_time=('vim@( *|)' 'man *' 'bash --norc' '?(m)ksh' '_ *')
 source "$LIBASHDIR/libash"
 
 plan9 () { (($#)) && ( exec -a "$1" "/usr/lib/plan9/bin/$@" ); }
@@ -98,8 +102,6 @@ snippet () {
 
 curlpic () { curl "$1" | feh - ; } 
 
-export ALARMTIME=07:05
-
 export EDITOR=vim
 
 dmsgl () { dmesg --color=always | less -R +G; }
@@ -132,16 +134,15 @@ cabal () (
   command cabal "$@"
 )
 
-export IGNOREEOF=1
+IGNOREEOF=1
 export PAGER=less
-#export MANPAGER=less
-#export GIT_PAGER=less
+#export MANPAGER=less GIT_PAGER=less
 
 alias pstree='pstree -A'
 alias leave='uprm;:q'
 alias ed='rlwrap ed'
 alias dc='rlwrap dc'
-alias wifi-menu='sudo wifi-menu'
+wifi-menu () { sudo wifi-menu "$@"; }
 youtube-dl () {
   history 1 | {
     read -ra array
@@ -190,9 +191,40 @@ sysupdate () (
       svn update
     fi >/dev/null &
     (( count ++ > 5 )) && wait -n
-    printf "\rrepos: %s/%s" "$count" "${#git[@]}"
+    printf "\rrepos: %s/%s" "$count" "${#dirs[@]}"
   done 2>/dev/null
   echo
   yaourt -Syua
   tlmgr update --all
+  suckup
 )
+nrg () {
+  local now=${1-0} max=${2-193}
+  if (( now >= max )); then
+    echo already full
+  else
+    local total minutes=0 hours=0 days=0 time i
+
+    if (( ( total = 10 * (max - now) ) <= 60 )); then
+      (( minutes = total ))
+    elif (( total <= 60 * 24 )); then
+      (( hours = total / 60, minutes = total % 60 ))
+    else
+      (( days = total / (60 * 24), minutes = total % (60 * 24) ,
+         hours = minutes / 60, minutes %= 60 ))
+    fi
+
+    for i in days hours minutes; do
+      case ${!i} in
+        0) ;;
+        1) time+="1 ${i%s} " ;;
+        *) time+="${!i} $i " ;;
+      esac
+    done
+    time=${time% }
+    printf -v now "%(%s)T"
+    printf "full in %s %((%c))T\n" "$time" "$((now + total*60))"
+  fi
+}
+alias FG=fg Fg=fg fG=fg fgf=fg
+ag () { command ag --pager="less -R" "$@"; }
