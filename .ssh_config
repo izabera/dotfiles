@@ -1,2 +1,6 @@
 Host *
   ServerAliveInterval 40
+  SendEnv LANG LC_*
+Host cell
+  User root
+  Port 2222

@@ -1,10 +1,10 @@
 #
 # ~/.bashrc
 #
-alias chmox='chmod +x'
-
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
+
+alias chmox='chmod +x'
 
 #shopt -s checkwinsize
 shopt -u sourcepath
@@ -35,7 +35,9 @@ path=(
 IFS=: eval 'export PATH="${path[*]}"'
 
 export LIBASHDIR=$HOME/sv/libash
-time_in_prompt=1 time_in_prompt_min=3 do_not_time=('vim@( *|)' 'man *' 'bash --norc' '?(m)ksh' '_ *')
+time_in_prompt=1 time_in_prompt_min=3
+do_not_time=('@(vim|emacs|ed|zathura|pavucontrol)@( *|)' '@(man|info) *' mutt '@([bd]a|z|?(m)k)sh@( |*)' 'notime *' 'crontab*' 'amazon@( *|)')
+alias notime=
 source "$LIBASHDIR/libash"
 
 plan9 () { (($#)) && ( exec -a "$1" "/usr/lib/plan9/bin/$@" ); }
@@ -72,8 +74,10 @@ complete -F _plan9 plan9
 heirloom () { (($#)) && ( exec -a "$1" "/usr/heirloom/bin/$@" ); }
 _heirloom () {
   if (( ${#COMP_WORDS[@]} < 3 )); then
+    command shopt -s nullglob
     comp=(/usr/heirloom/bin/"${COMP_WORDS[COMP_CWORD]}"*)
     COMPREPLY=("${comp[@]##*/}")
+    command shopt -u nullglob
   else
     compopt -o bashdefault
     compopt -o default
@@ -85,15 +89,19 @@ complete -F _heirloom heirloom
 suckless () { (($#)) && ( exec -a "$1" "/usr/suckless/bin/$@" ); }
 _suckless () {
   if (( ${#COMP_WORDS[@]} < 3 )); then
+    command shopt -s nullglob
     comp=(/usr/suckless/bin/"${COMP_WORDS[COMP_CWORD]}"*)
     COMPREPLY=("${comp[@]##*/}")
+    command shopt -u nullglob
   else
     compopt -o bashdefault
     compopt -o default
     compopt -o filenames
   fi
 }
-complete -F _suckless suckless
+sbase () { (($#)) && ( exec -a "$1" /home/izabera/sbase/"$@") ; }
+ubase () { (($#)) && ( exec -a "$1" /home/izabera/ubase/"$@") ; }
+complete -F _suckless suckless sbase ubase
 
 snippet () {
   [[ $1 ]] && curl -s "$1" | vim ${2++'set ft='"$2"} \
@@ -226,5 +234,18 @@ nrg () {
     printf "full in %s %((%c))T\n" "$time" "$((now + total*60))"
   fi
 }
-alias FG=fg Fg=fg fG=fg fgf=fg
-ag () { command ag --pager="less -R" "$@"; }
+alias FG=fg Fg=fg fG=fg fgf=fg langc=LANG=C
+ag () { command ag --pager="less -Ri" "$@"; }
+alias mutt='tmuxwrap mutt' nc='rlwrap nc'
+
+_inutility () {
+  if (( ${#COMP_WORDS[@]} < 3 )); then
+    while read -r; do
+      [[ $REPLY = "$2"* ]] && COMPREPLY+=("$REPLY");
+    done < <(inutility list -n)
+  else
+    compopt -o default;
+    compopt -o filenames;
+  fi
+}
+complete -F _inutility inutility
