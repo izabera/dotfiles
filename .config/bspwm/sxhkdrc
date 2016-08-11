@@ -109,4 +109,7 @@ super + Escape
 	pkill -USR1 -x sxhkd
 
 Print
-	scrot
+	scrot -e 'xclip -sel clip -t image/png < $f'
+
+shift + Print
+  file=$(date +%F-%H%M%S_import.png); import "$file"; xclip -sel clip -t image/png < "$file"

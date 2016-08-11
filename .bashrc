@@ -36,7 +36,7 @@ IFS=: eval 'export PATH="${path[*]}"'
 
 export LIBASHDIR=$HOME/sv/libash
 time_in_prompt=1 time_in_prompt_min=3
-do_not_time=('@(vim|emacs|ed|zathura|pavucontrol)@( *|)' '@(man|info) *' mutt '@([bd]a|z|?(m)k)sh@( |*)' 'notime *' 'crontab*' 'amazon@( *|)')
+do_not_time=('@(vim|emacs|ed|zathura|pavucontrol|objdump)@( *|)' '@(man|info) *' mutt '@([bd]a|z|?(m)k)sh@( |*)' ' *' 'crontab*' 'amazon@( *|)')
 alias notime=
 source "$LIBASHDIR/libash"
 
@@ -249,3 +249,14 @@ _inutility () {
   fi
 }
 complete -F _inutility inutility
+
+logsync () { rsync -az izabera@arin.ga:/home/izabera/.weechat/logs/ ~/.weechat/remote_logs; }
+modemcell () ( cd /sys/class/net && sudo dhcpcd enp0* )
+sgf2gif () {
+  ~/download/sgf2misc/src/sgf2misc -to gif -max 1 -ppm ~/download/sgf2misc/src/ppm "$@"
+  convert -delay 100 *.gif out.gif
+}
+bleachmpv () { mpv --aid=2 --sid=2 "$@"; }
+
+#MAILPATH=~/mail/[Gmail].All\ Mail/
+#shopt -s mailwarn

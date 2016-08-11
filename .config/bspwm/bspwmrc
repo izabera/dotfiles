@@ -25,8 +25,10 @@ bspc rule -a mpv floating=on
 bspc rule -a vlc floating=on
 bspc rule -a Weechat desktop=^2 follow=on fullscreen=on
 bspc rule -a qemu-system-x86_64 floating=on
+bspc rule -a sun-awt-X11-XFramePeer floating=on
 
 bspc config -m focused top_padding 15
 
 . ~/font
+~/others/wmname/wmname LG3D
 mybar
