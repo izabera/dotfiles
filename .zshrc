@@ -14,7 +14,8 @@ bindkey '^?' backward-delete-char
 
 setopt NO_BEEP
 
-autoload -Uz compinit colors zsh/terminfo zmv zrecompile edit-command-line add-zsh-hook
+zmodload zsh/terminfo
+autoload -Uz compinit colors zmv zrecompile edit-command-line add-zsh-hook
 compinit
 colors
 
