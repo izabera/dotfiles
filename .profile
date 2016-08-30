@@ -175,7 +175,7 @@ __battery () {
       #if (( i >= (__val/10) )) ; then
       #fucking sh
     for i in {0..10} ; do
-      if [ $i -gt $((__val/10)) ] ; then
+      if [ "$i" -gt "$((__val/10))" ] ; then
         printf '%s=%s' "$RED" "$NO_COLOR"
       else
         printf '%s=%s' "$GREEN" "$NO_COLOR"
@@ -195,7 +195,7 @@ __bwbattery () {
     read __bat < /sys/class/power_supply/BAT0/status
     printf " ["
     for i in {0..10} ; do
-      if [ $i -gt $((__val/10)) ] ; then
+      if [ "$i" -gt "$((__val/10))" ] ; then
         printf -- "-"
       else
         printf "="
@@ -242,7 +242,7 @@ __right_prompt () {
       __batterystatus+="["
     fi
     for i in {0..10} ; do
-      if [ $i -gt $((__val/10)) ] ; then
+      if [ "$i" -gt "$((__val/10))" ] ; then
         #__width=$((__width - 11 ))
         __batterystatus+="${RED}=${NO_COLOR}"
       else
